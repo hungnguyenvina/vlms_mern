@@ -41,7 +41,13 @@ var db = mongoose.connection;
     console.log("we're connected!");
   });
 
-
+  if(process.env.NODE_ENV === "production") {
+    const path = require('path');
+    app.get('/*',(req,res)=>{
+      res.sendFile(path.resolve(__dirname,'../client','build','index.html'));
+    })
+  }
+  
 app.use('/api', router);
 // use morgan to log requests to the console
 var storage = multer.diskStorage({
@@ -72,12 +78,7 @@ app.post('/api/upload_file', upload.single('myFile'), (req, res, next) => {
   res.json({url: 'https://arcane-wave-25280.herokuapp.com/uploads/'+req.body.filename});
 })
 
-if(process.env.NODE_ENV === "production") {
-  const path = require('path');
-  app.get('/*',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,'../client','build','index.html'));
-  })
-}
+
 
 app.listen(PORT, ()=>{
     console.log(`Server is running at port: ${PORT}`);
