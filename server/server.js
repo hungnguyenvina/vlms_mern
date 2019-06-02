@@ -32,8 +32,8 @@ app.use(function(req, res, next) {
 
 app.use(cookieParser());
 
-app.use(express.static('public'));
-app.use("/uploads",express.static(__dirname +'/uploads'));
+
+app.use('/', express.static(path.resolve(__dirname,'../client','build','index.html')));
 
 var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
@@ -47,7 +47,7 @@ var db = mongoose.connection;
       res.sendFile(path.resolve(__dirname,'../client','build','index.html'));
     })
   }
-  
+
 app.use('/api', router);
 // use morgan to log requests to the console
 var storage = multer.diskStorage({
