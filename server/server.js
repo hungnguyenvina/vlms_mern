@@ -75,7 +75,7 @@ app.post('/api/upload_file', upload.single('myFile'), (req, res, next) => {
 if(process.env.NODE_ENV === "production") {
   const path = require('path');
   app.get('/*',(req,res)=>{
-    res.send(path.resolve(__dirname,'../client','build','index.html'));
+    res.sendfile(path.resolve(__dirname,'../client','build','index.html'));
   })
 }
 
