@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+const path = require('path');
 var multer = require('multer');
 require('dotenv').config();
 const PORT = process.env.PORT || 3004;
