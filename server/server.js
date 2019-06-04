@@ -34,8 +34,7 @@ app.use(function(req, res, next) {
 app.use(cookieParser());
 
 
-//app.use(express.static(path.resolve(__dirname,'../client','build')));
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.resolve(__dirname,'../client','build')));
 
 var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
