@@ -18,15 +18,13 @@ mongoose.connect(process.env.MONGODB_URI,{ useCreateIndex: true, useNewUrlParser
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
-app.use(function(req, res, next) {
-  //res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+/*app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "https://arcane-wave-25280.herokuapp.com");
-  
   res.header("Access-Control-Allow-Credentials", true);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods","GET,POST, PUT,PATCH, DELETE");
   next();
-});
+});*/
 
 //app.use(cors({ origin: 'http://localhost:3000',credetials: true}));
 //app.use(cors({credentials: true,}));
