@@ -27,6 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "http://://dsomething.cloudfront.net",
   "eslintConfig": {
     "extends": "react-app"
   },
