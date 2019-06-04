@@ -35,7 +35,7 @@ app.use(cookieParser());
 
 
 app.use(express.static(path.resolve(__dirname,'../client','build')));
-
+app.use(express.static(path.resolve(__dirname,'../client','build','static')));
 var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function() {
