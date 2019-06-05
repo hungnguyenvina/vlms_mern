@@ -27,7 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://stormy-peak-40476.herokuapp.com/",
+  "homepage": "https://arcane-wave-25280.herokuapp.com",
   "eslintConfig": {
     "extends": "react-app"
   },
