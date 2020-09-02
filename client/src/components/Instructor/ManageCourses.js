@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import {Link} from 'react-router-dom';
 import { Button, Loading, Tag, Table, Pagination } from "element-react";
 import CourseImage from "../../images/course.png";
-import { loadInstructorCourses } from "../../redux/action/CourseAction";
+import { loadInstructorCourses,deleteCourse} from "../../redux/action/CourseAction";
 import { hoc } from "../hoc/hoc";
 import InstructorLayout from './InstructorLayout';
 class ManageCourses extends Component {
@@ -36,7 +37,7 @@ class ManageCourses extends Component {
           width: 230,
           align: "left",
           render: function(data) {
-            return data.title;
+            return <Link to={`/instructor/update_course_curriculum/${data.id}`}>{data.title}</Link>;
           }
         },
         {
@@ -98,7 +99,7 @@ class ManageCourses extends Component {
                 <Button
                   type="danger"
                   size="small"
-                  onClick={() => me.deleteQuestionCategory(data, me)}
+                  onClick={() => me.deleteCourse(data, me)}
                 >
                   Delete
                 </Button>
@@ -117,10 +118,12 @@ class ManageCourses extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  deleteCourse(id) {}
+  deleteCourse = (item,me) => {
+    this.props.deleteCourse(item.id);
+  }
 
   handleClick(event) {
-    alert("select page" + Number(event.target.id));
+    //alert("select page" + Number(event.target.id));
     this.setState({
       currentPage: Number(event.target.id)
     });
@@ -136,7 +139,7 @@ class ManageCourses extends Component {
           title: item.title,
           description: item.description,
           fee: item.fee,
-          course_category_parent_name: item.course_category_parent_name,
+          course_category_parent_name: item.course_category_name,
           status: item.status
         });
       });
@@ -208,14 +211,15 @@ class ManageCourses extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.courses);
+  //console.log(state.courses);
   return {
     courses: state.courses.instructor_courses
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  loadInstructorCourses: dispatch(loadInstructorCourses())
+  loadInstructorCourses: dispatch(loadInstructorCourses()),
+  deleteCourse: (courseID) => dispatch(deleteCourse(courseID)),
 });
 
 export default hoc(ManageCourses, mapStateToProps, mapDispatchToProps);

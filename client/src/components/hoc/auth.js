@@ -18,7 +18,7 @@ class Authentication extends Component {
         //console.log('componentWillReceiveProps');
         console.log(nextProps);
         if(!nextProps.user) {
-            alert('not authenticate111');
+            //alert('not authenticate111');
             if(noNeedAuthenticate) {
                 this.setState({loading: false});
             }
@@ -32,7 +32,7 @@ class Authentication extends Component {
                 this.setState({loading: false});
             }
             else {
-                alert('not authenticate');
+                //alert('not authenticate');
                 if(noNeedAuthenticate) {
                     this.setState({loading: false});
                 }

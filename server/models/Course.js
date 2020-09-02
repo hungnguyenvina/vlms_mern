@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var CourseSchema = new Schema({
     title: {
         type: String,
-        unique: true,
+        unique: false,
         required: 'Please input course title'
     },
     short_description: {

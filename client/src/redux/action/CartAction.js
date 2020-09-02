@@ -10,7 +10,7 @@ export const addCourseToCartSuccess = (data) => {
 
 export const addCourseToCart = (courseID) => {
     return (dispatch) => {
-        axios.post('http://localhost:3004/api/cart/add/'+courseID,courseID,{withCredentials: true})
+        axios.post('http://localhost:3004/api/carts/add/'+courseID,courseID,{withCredentials: true})
             .then(res => {
                 console.log('after call api add course to cart');
                 console.log(res.data);
@@ -66,7 +66,7 @@ export const removeCourseFromCartSuccess = (data) => {
 
 export const removeCourseFromCart = (courseID) => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/cart/delete?id='+courseID,{withCredentials: true})
+        axios.get('http://localhost:3004/api/carts/delete?id='+courseID,{withCredentials: true})
             .then(res => {
                 console.log('after call api remove course from cart');
                 console.log(res.data);

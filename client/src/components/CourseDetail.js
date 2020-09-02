@@ -33,7 +33,7 @@ class CourseDetail extends Component {
   }
 
   playVideo(lessionContent) {
-    alert('playing video'+lessionContent);
+    //alert('playing video'+lessionContent);
     let media = ""; 
 		var indexMP4 = lessionContent.endsWith("mp4");
 		var indexM4V = lessionContent.endsWith("m4v");
@@ -102,14 +102,14 @@ class CourseDetail extends Component {
                         }
 
                         //alert('this.props.id : '+this.props.id);
-                        console.log('media : '+media);
+                        //console.log('media : '+media);
                         this.props.setMedia('VideoPlayer', media);
                         this.setState({dialogVisible: true});  
-                        alert($('.jp-media'));
+                        //alert($('.jp-media'));
                         $('.jp-media').attr("width","100%");                
   }
   componentWillReceiveProps(nextProps) {
-    console.log('receive props');
+    //console.log('receive props');
     let currentCurriculum = {...this.state.curriculum};
     const curriculums = nextProps.curriculum;
     console.log(curriculums);
@@ -186,11 +186,10 @@ class CourseDetail extends Component {
 
   addCourseToCart = () => {
     const courseID = this.props.match.params.id;
-    alert('adding '+ courseID+ ' to cart');
-
-      this.props.addCourseToCart(courseID);
-      let me=this;
-      setTimeout(function(){ me.props.history.push('/cart'); }, 2000);
+    //alert('adding '+ courseID+ ' to cart');
+    this.props.addCourseToCart(courseID);
+    let me=this;
+    setTimeout(function(){ me.props.history.push('/cart'); }, 2000);
   }
 
   render() {
@@ -210,7 +209,7 @@ class CourseDetail extends Component {
         course_price = this.props.single_course.fee;
         course_title = this.props.single_course.title;
         instructor_name= this.props.single_course.instructor_name;
-        alert('instructor_name:'+instructor_name);
+        //alert('instructor_name:'+instructor_name);
         course_duration=this.props.single_course.duration;
         course_picture_url=this.props.single_course.course_picture_url;
         loading = "";

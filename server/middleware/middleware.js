@@ -1,7 +1,7 @@
 const User = require('../models/User');
 
-function checkAuthenticate(app,jwt) {
-
+function checkAuthenticate() {
+   
     return function middleware(req,res,next) {
     var token = req.cookies.c_auth;
     console.log('token value in middleware : ', token);

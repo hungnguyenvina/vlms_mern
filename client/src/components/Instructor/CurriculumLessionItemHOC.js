@@ -46,20 +46,20 @@ class CurriculumLessionItemHOC extends React.Component {
             lession_title: this.state.lessionContent.lession_title
         }
         const sectionIndex = this.props.id;
-        alert('sectionIndex:'+sectionIndex);
+        //alert('sectionIndex:'+sectionIndex);
         this.setState({lessionContent});
         this.props.onLessionChange(sectionIndex,lessionContent);
     }
 
     handleRemove = (file, fileList) => {
         //alert('remove from list');
-        console.log(file, fileList);
+        //console.log(file, fileList);
     }
 
     chooseLessionContentTextType = (e) => {
-        alert('choose lession text type'+ this.state.content);
+        //alert('choose lession text type'+ this.state.content);
         //this.setState({display_lession_video: 1});
-        alert('this.state.lessionContent.lession_title:'+this.state.lessionContent.lession_title);
+        //alert('this.state.lessionContent.lession_title:'+this.state.lessionContent.lession_title);
         const lessionContent = {
             lession_index: this.state.lessionContent.lession_index,
             lession_type: 0, /* 0: lession's content is text, 1: video url */
@@ -68,31 +68,31 @@ class CurriculumLessionItemHOC extends React.Component {
         }
         this.setState({display_lession_video: 1});
         const sectionIndex = this.props.id;
-        alert('sectionIndex:'+sectionIndex);
+        //alert('sectionIndex:'+sectionIndex);
         this.setState({lessionContent});
         this.props.onLessionChange(sectionIndex,lessionContent);
     }
 
     chooseLessionContentVideoType = (e) => {
-        alert('choose lession video type');
+        //alert('choose lession video type');
         this.setState({display_lession_video: 0});
     }
 
     handlePreview(file) {
-        console.log(file);
+        //console.log(file);
     }
 
     handleChange = (file, fileList) => {
-        alert('on changexx');
-        console.log(file);
-        console.log(fileList);
-        console.log('file name: '+file.raw.name);
-        console.log(file.raw);
+        //alert('on changexx');
+        //console.log(file);
+        //console.log(fileList);
+        //console.log('file name: '+file.raw.name);
+        //console.log(file.raw);
         this.createImage(file.raw);
     }
     
     fileUpload(image,fileName){
-		console.log('file upload');
+		//console.log('file upload');
 		//console.log(image);
 		const url = 'http://localhost:3004/api/upload_file';
         //const formData = {file: image,filename:fileName}
@@ -100,11 +100,11 @@ class CurriculumLessionItemHOC extends React.Component {
 		return  post(url, formData)
 				.then(response => {
                         let media = ""; 
-                        console.log('file response....'+ response);
-                        console.log( response);
+                        //console.log('file response....'+ response);
+                        //console.log( response);
 					    //console.log('file response....'+ this.state.image);
                         let urlResponse = response.data.url;
-                        alert('urlResponse : '+urlResponse);
+                        //alert('urlResponse : '+urlResponse);
                         var indexMP4 = urlResponse.endsWith("mp4");
                         var indexWEBMV = urlResponse.endsWith("webm");
                         var indexOGV = urlResponse.endsWith("ogv");
@@ -160,7 +160,7 @@ class CurriculumLessionItemHOC extends React.Component {
                         //alert('video url:'+response.data.content);
                         //alert('this.props.lession_index:'+this.props.lession_index);
                         //alert('this.props.lession_title:'+this.props.lession_title);
-                        alert('this.state.lessionContent.lession_title:'+this.state.lessionContent.lession_title);
+                        //alert('this.state.lessionContent.lession_title:'+this.state.lessionContent.lession_title);
                         const lessionContent = {
                             lession_index: this.props.lession_index,
                             lession_type: 1, /* 0: lession's content is text, 1: video url */
@@ -169,7 +169,7 @@ class CurriculumLessionItemHOC extends React.Component {
                         }
                         this.setState({lessionContent});
                         const sectionIndex =this.props.section_index;
-                        alert('sectionIndex: '+sectionIndex);
+                        //alert('sectionIndex: '+sectionIndex);
                         this.props.onLessionChange(sectionIndex,lessionContent);
                         //this.setState({image: response.data.url});
                     }
@@ -180,8 +180,8 @@ class CurriculumLessionItemHOC extends React.Component {
       //alert('create image');
       let reader = new FileReader();
       reader.onload = (e) => {
-		console.log('picture result');
-		console.log(e.target.result);
+		//console.log('picture result');
+		//console.log(e.target.result);
         this.setState({image: e.target.result })
         this.fileUpload(e.target.result,file.name);
       };
@@ -191,7 +191,7 @@ class CurriculumLessionItemHOC extends React.Component {
     changeLessionTitle = (value) => {
         let lessionContent = {...this.state.lessionContent };
         lessionContent['lession_title'] = value;
-        console.log(value);
+        //console.log(value);
         this.setState({lessionContent});
     }
 
@@ -205,10 +205,10 @@ class CurriculumLessionItemHOC extends React.Component {
         this.setState({
             display_lession_title_input: !this.state.display_lession_title_input
         })
-        console.log('save new lesstion title/......');
-        console.log(this.state.lessionContent);
+        //console.log('save new lesstion title/......');
+        //console.log(this.state.lessionContent);
         const sectionIndex = this.props.section_index;
-        alert('section index='+sectionIndex);
+        //alert('section index='+sectionIndex);
         this.props.onLessionChange(sectionIndex,this.state.lessionContent);
     }
 
@@ -224,8 +224,25 @@ class CurriculumLessionItemHOC extends React.Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        alert('nextProps.lession_title'+nextProps.lession_title);
+        if(this.props.isHidden == 'true')
+        {
+            this.setState({display_component: 'false'});
+        }
+
+        const lessionContent = {
+            lession_index: nextProps.lession_index,
+            lession_type: 0, /* 0: lession's content is text, 1: video url */
+            lession_content:nextProps.lession_content,
+            lession_title: nextProps.lession_title
+        }
+
+        this.setState({ lessionContent });
+    }
 
     componentWillMount() {
+        alert('this.props.lession_title'+this.props.lession_title);
         if(this.props.isHidden == 'true')
         {
             this.setState({display_component: 'false'});
@@ -255,6 +272,7 @@ class CurriculumLessionItemHOC extends React.Component {
         const fileList2 = [];
         return (
 			<div style={{ marginBottom:'20px' }} className='divCourseLession'>
+                
                 <div style={{display:this.state.display_lession_title_input==false?'inline-block':'none'}}>
                     <label  className="lblSectionTitle">{this.state.lessionContent.lession_title} </label>
                     <Button style={{marginBottom:'20px'}} onClick={() => this.showChangeLessionTitle()} size="small" type="warning">Change</Button>
@@ -268,6 +286,8 @@ class CurriculumLessionItemHOC extends React.Component {
                 
                 <Button style={{marginLeft:'20px',marginBottom:'20px'}} onClick={() => this.showHide()} size="small" type="warning">Show/Hide</Button>
                 <br />
+                <span>Lession's content:</span><h4> {this.state.lessionContent.lession_content}</h4>
+                <br/>
                 <div className="lession-content-type" style={{display:this.state.display_component=='true'?'inline-block':'none'}}>
                     <input type="radio" id={`radLessionTextType_${this.props.id}`} checked={this.state.display_lession_video==1?'checked':''} onChange={(e) => this.chooseLessionContentTextType(e)} name={`lession_content_type_${this.props.id}`} value="text" /> Text&nbsp;
                     <input type="radio" id={`radLessionVideoType_${this.props.id}`} checked={this.state.display_lession_video==0?'checked':''} onChange={(e) => this.chooseLessionContentVideoType(e)} name={`lession_content_type_${this.props.id}`} value="video" /> Video

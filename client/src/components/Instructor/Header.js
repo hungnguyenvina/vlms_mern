@@ -16,7 +16,7 @@ class Header extends Component {
     }
 
     logOut = () => {
-        alert('logout...');
+        //alert('logout...');
         this.props.logout();
         this.props.history.push('/login');
     }

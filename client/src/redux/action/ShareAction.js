@@ -12,7 +12,7 @@ export const loadQuestionCategoriesOptionsHTML = () => {
     return (dispatch) => {
         axios.get('http://localhost:8000/api/question_categories/html')
             .then(res => {
-                console.log(res.data);
+                //console.log(res.data);
                 dispatch(loadQuestionCategoriesOptionsHTMLSuccess(res.data));
             }).catch(error => {
 
@@ -31,7 +31,7 @@ export const loadCourseCategoriesOptionsHTML = () => {
     return (dispatch) => {
         axios.get('http://localhost:8000/api/course_categories/html')
             .then(res => {
-                console.log(res.data);
+                //console.log(res.data);
                 dispatch(loadCourseCategoriesOptionsHTMLSuccess(res.data));
             }).catch(error => {
 

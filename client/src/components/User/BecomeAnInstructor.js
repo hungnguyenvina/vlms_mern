@@ -11,7 +11,7 @@ class BecomeAnInstructor extends Component {
 
     becomeAnInstructor = () => {
         const userID = this.props.user.id;
-        alert('userID = '+userID);
+        //alert('userID = '+userID);
         this.props.becomeAnInstructor(userID);
     }
 

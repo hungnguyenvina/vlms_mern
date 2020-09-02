@@ -10,10 +10,10 @@ export const loadCourseSuccess = (data) => {
 
 export const loadCourses = () => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/all_courses')
+        axios.get('http://localhost:3004/api/courses/all_courses')
             .then(res => {
-                console.log('after call API....');
-                console.log(res.data);
+                //console.log('after call API....');
+                //console.log(res.data);
                 dispatch(loadCourseSuccess(res.data));
             }).catch(error => {
 
@@ -30,10 +30,10 @@ export const loadSingleCourseSuccess = (data) => {
 
 export const loadSingleCourse = (courseID) => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/course/'+courseID)
+        axios.get('http://localhost:3004/api/courses/'+courseID)
             .then(res => {
-                console.log('after call get single course API....');
-                console.log(res.data[0]);
+                //console.log('after call get single course API....');
+                //console.log(res.data[0]);
                 dispatch(loadSingleCourseSuccess(res.data[0]));
             }).catch(error => {
 
@@ -52,7 +52,7 @@ export const loadUserCourses = () => {
     return (dispatch) => {
         axios.get('http://localhost:3004/api/user/courses')
             .then(res => {
-                console.log(res.data);
+                //console.log(res.data);
                 dispatch(loadUserCourseSuccess(res.data));
             }).catch(error => {
 
@@ -69,9 +69,9 @@ export const loadInstructorCourseSuccess = (data) => {
 
 export const loadInstructorCourses = () => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/instructor_courses')
+        axios.get('http://localhost:3004/api/courses/instructor_courses',{withCredentials: true})
             .then(res => {
-                console.log(res.data);
+                //console.log(res.data);
                 dispatch(loadInstructorCourseSuccess(res.data));
             }).catch(error => {
 
@@ -88,10 +88,10 @@ export const createCourseSuccess = (data) => {
 
 export const createCourse = (course) => {
     return (dispatch) => {
-        axios.post('http://localhost:3004/api/course',course)
+        axios.post('http://localhost:3004/api/courses',course,{withCredentials: true})
             .then(res => {
-                console.log('after call api add course');
-                console.log(res.data);
+                //console.log('after call api add course');
+                //console.log(res.data);
                 dispatch(createCourseSuccess(res.data));
             }).catch(error => {
 
@@ -108,10 +108,11 @@ export const updateCourseCurriculumSuccess = (data) => {
 
 export const updateCourseCurriculum = (id,course) => {
     return (dispatch) => {
-        axios.put('http://localhost:3004/api/course/update_curriculum/'+id,course)
+        axios.put('http://localhost:3004/api/courses/update_curriculum/'+id,course)
             .then(res => {
+                console.log('updateCourseCurriculum actions');
                 console.log(res.data);
-                dispatch(updateCourseCurriculumSuccess(res.data));
+                dispatch(updateCourseCurriculumSuccess(res.data.curriculum));
             }).catch(error => {
 
             });
@@ -120,10 +121,11 @@ export const updateCourseCurriculum = (id,course) => {
 
 export const loadCourseCurriculum = (id) => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/course/curriculum/'+id)
+        axios.get('http://localhost:3004/api/courses/curriculum/'+id)
             .then(res => {
+                console.log('loadCourseCurriculum action...');
                 console.log(res.data);
-                dispatch(loadCourseCurriculumSuccess(res.data));
+                dispatch(loadCourseCurriculumSuccess(res.data.curriculum));
             }).catch(error => {
 
             });
@@ -139,9 +141,9 @@ export const loadLessionByLessionIDSuccess = (data) => {
 
 export const loadLessionByLessionID = (id) => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/lession/'+id)
+        axios.get('http://localhost:3004/api/courses/lession/'+id)
             .then(res => {
-                console.log(res.data);
+                //console.log(res.data);
                 dispatch(loadLessionByLessionIDSuccess(res.data));
             }).catch(error => {
 
@@ -153,5 +155,23 @@ export const loadCourseCurriculumSuccess = (data) => {
     return {
         type: actionTypes.LOAD_COURSE_CURRICULUM_SUCCESS,
         payload: data
+    }
+}
+
+export const deleteCourseSuccess = (courseID) => {
+    return {
+        type: actionTypes.DELETE_COURSE_SUCCESS,
+        payload: courseID
+    }
+}
+
+export const deleteCourse = (courseID) => {
+    return (dispatch) => {
+        axios.delete('http://localhost:3004/api/courses/'+courseID)
+            .then(res => {
+                dispatch(deleteCourseSuccess(courseID));
+            }).catch(error => {
+
+            });
     }
 }

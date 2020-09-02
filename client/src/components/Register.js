@@ -17,8 +17,8 @@ class Register extends Component {
   }
 
   onSubmit = () =>{
-    console.log('user info');
-    console.log(this.state.user);
+    //console.log('user info');
+    //console.log(this.state.user);
     this.props.register(this.state.user);
   }
 
@@ -27,7 +27,7 @@ class Register extends Component {
         ...this.state.user,
         [key]: value
     };
-    console.log(newUser);
+    //console.log(newUser);
     this.setState({user:newUser});
 
   }

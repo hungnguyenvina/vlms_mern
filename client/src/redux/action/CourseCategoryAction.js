@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
 export const loadCourseCategorySuccess = (data) => {
-    console.log('in action2: ',data);
+    //console.log('in action2: ',data);
     return {
         type: actionTypes.LOAD_COURSE_CATEGORIES_SUCCESS,
         payload: data
@@ -13,7 +13,7 @@ export const loadCourseCategory = () => {
     return (dispatch) => {
         axios.get('http://localhost:3004/api/course_categories')
             .then(res => {
-                console.log('in action:',res.data);
+                //console.log('in action:',res.data);
                 dispatch(loadCourseCategorySuccess(res.data));
             }).catch(error => {
 
@@ -30,7 +30,7 @@ export const deleteCourseCategorySuccess = (courseCategoryID) => {
 
 export const deleteCourseCategory = (courseCategoryID) => {
     return (dispatch) => {
-        axios.delete('http://localhost:3004/api/course_category/'+courseCategoryID)
+        axios.delete('http://localhost:3004/api/course_categories/'+courseCategoryID)
             .then(res => {
                 dispatch(deleteCourseCategorySuccess(courseCategoryID));
             }).catch(error => {
@@ -48,10 +48,10 @@ export const createCourseCategorySuccess = (data) => {
 
 export const createCourseCategory = (courseCategory) => {
     return (dispatch) => {
-        axios.post('http://localhost:3004/api/course_category/',courseCategory)
+        axios.post('http://localhost:3004/api/course_categories/',courseCategory)
             .then(res => {
-                console.log('result from api');
-                console.log(res.data);
+                //console.log('result from api');
+                //console.log(res.data);
                 dispatch(createCourseCategorySuccess(res.data));
             }).catch(error => {
 
@@ -69,11 +69,11 @@ export const updateCourseCategorySuccess = (id,data) => {
 
 export const updateCourseCategory = (id,courseCategory) => {
     return (dispatch) => {
-        axios.put('http://localhost:3004/api/course_category/'+id,courseCategory)
+        axios.put('http://localhost:3004/api/course_categories/'+id,courseCategory)
             .then(res => {
-                console.log('after call api updsate course category');
-                console.log(res.data);
-                console.log(id);
+                //console.log('after call api updsate course category');
+                //console.log(res.data);
+                //console.log(id);
                 dispatch(updateCourseCategorySuccess(id,res.data.courseCategory));
             }).catch(error => {
 

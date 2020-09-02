@@ -187,8 +187,8 @@ class QuestionCategories extends React.Component {
 
     onSubmitHandler(event) {
       event.preventDefault();
-      console.log('submit');
-      console.log(this.state.questionCategory);
+      //console.log('submit');
+      //console.log(this.state.questionCategory);
       var categoryQuestionParentID = this.state.questionCategory.question_category_parent_id;
       const questionCategory = {
         name : this.state.questionCategory.name,
@@ -256,8 +256,8 @@ class QuestionCategories extends React.Component {
         if(nextProps.question_categories && nextProps.question_categories.length>0)
         {
           this.setState({loading:true});
-          console.log(' nextProps.question_categories.....');
-          console.log( nextProps.question_categories);
+          //console.log(' nextProps.question_categories.....');
+          //console.log( nextProps.question_categories);
           nextProps.question_categories.map(item=>{
             return question_categories.push({
               'id': item._id,

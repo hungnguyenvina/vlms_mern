@@ -20,19 +20,19 @@ class CurriculumSectionHOC extends React.Component {
 
     deleteSection = (e,id) => {
         e.preventDefault();
-        alert('delete section'+id);
+        //alert('delete section'+id);
         let tmpIndex = 0;
         for (var i = 0; i < this.state.sections.length; i++) {
             const valueOfItem = this.state.sections[i].props.id;
-            alert('valueOfItem:'+valueOfItem);
+            //alert('valueOfItem:'+valueOfItem);
             if(valueOfItem == id) {
-                alert('herexxxx :'+i);
+                //alert('herexxxx :'+i);
                 tmpIndex=i;
 
                 break;
             }
         }
-        alert('tmpIndex='+tmpIndex);
+        //alert('tmpIndex='+tmpIndex);
 
         let currentSections = [...this.state.sections];
         currentSections.splice(tmpIndex,1);
@@ -40,11 +40,11 @@ class CurriculumSectionHOC extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        alert('componentWillReceiveProps inside Curri Section Hoc');
+        //alert('componentWillReceiveProps inside Curri Section Hoc');
         //alert('nextProps.noOfSections = '+nextProps.noOfSections);
         //alert('this.props.sections.length = '+this.props.sections.length);
         //if(nextProps.noOfSections != this.props.sections.length) {
-            alert('not equal');
+            //alert('not equal');
             let arrays = [];
             for (var i = 0; i < nextProps.sections.length; i++) {
                 alert(nextProps.sections[i].title);
@@ -63,9 +63,9 @@ class CurriculumSectionHOC extends React.Component {
     }
 
     updateLessionContent = (lession_content) => {
-        alert('lession index in curri section:'+ lession_content.lession_index);
-        alert('lession type in curri section:'+ lession_content.lession_type);
-        alert('lession content in curri section:'+ lession_content.lession_content);
+        //alert('lession index in curri section:'+ lession_content.lession_index);
+        //alert('lession type in curri section:'+ lession_content.lession_type);
+        //alert('lession content in curri section:'+ lession_content.lession_content);
         const lessionContent = {
             lession_index: lession_content.lession_index,
             lession_type: lession_content.lession_type, /* 0: lession's content is text, 1: video url */

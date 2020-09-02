@@ -12,8 +12,8 @@ export const loadUser = () => {
     return (dispatch) => {
         axios.get('http://localhost:3004/api/users')
             .then(res => {
-                alert('loaded');
-                console.log(res.data);
+                //alert('loaded');
+                //console.log(res.data);
                 dispatch(loadUserSuccess(res.data));
             }).catch(error => {
 
@@ -30,7 +30,7 @@ export const deleteUserSuccess = (userID) => {
 
 export const deleteUser = (userID) => {
     return (dispatch) => {
-        axios.delete('http://localhost:3004/api/user/'+userID)
+        axios.delete('http://localhost:3004/api/users/'+userID)
             .then(res => {
                 dispatch(deleteUserSuccess(userID));
             }).catch(error => {
@@ -50,7 +50,7 @@ export const updateAdminProfile = (profile) => {
     return (dispatch) => {
         axios.put('http://localhost:3004/api/update_admin_profile',profile)
             .then(res => {
-                console.log(res.data);
+                //console.log(res.data);
                 dispatch(updateAdminProfileSuccess(res.data.data));
             }).catch(error => {
 
@@ -67,10 +67,10 @@ export const becomeAnInstructorSuccess = (data) => {
 
 export const becomeAnInstructor = (id) => {
     return (dispatch) => {
-        axios.put('http://localhost:3004/api/user/become_instructor/'+id,null,{withCredentials: true})
+        axios.put('http://localhost:3004/api/users/become_instructor/'+id,null,{withCredentials: true})
             .then(res => {
-                console.log('after calling api become instructor...');
-                console.log(res.data);
+                //console.log('after calling api become instructor...');
+                //console.log(res.data);
                 dispatch(becomeAnInstructorSuccess(res.data));
             }).catch(error => {
 
@@ -90,7 +90,7 @@ export const updateUserProfile = (id,profile) => {
     return (dispatch) => {
         axios.put('http://localhost:3004/api/update_user_profile/'+id,profile)
             .then(res => {
-                console.log(res.data);
+                //console.log(res.data);
                 dispatch(updateUserProfileSuccess(id,res.data.data));
             }).catch(error => {
 
@@ -109,8 +109,8 @@ export const login = (user) => {
     return (dispatch) => {
         const request = axios.post('http://localhost:3004/api/login/',user,{withCredentials: true})
             .then(res => {
-                console.log('request after login:');
-                console.log(res.data);
+                //console.log('request after login:');
+                //console.log(res.data);
                 dispatch(loginSuccess(res.data));
             })
             
@@ -181,10 +181,11 @@ export const loadAuthenticatedUserFailure = (data) => {
 
 export const loadAuthenticatedUser = () => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/user/auth/',{withCredentials: true})
+        axios.get('http://localhost:3004/api/users/authenticate/',{withCredentials: true})
             .then(res => {
-                alert('loaded1');
-                console.log(res.data);
+                //alert('loaded1222222222');
+                //console.log('user info1...');
+                //console.log(res.data);
                 dispatch(loadAuthenticatedUserSuccess(res.data));
             }).catch(error => {
                 alert('error');

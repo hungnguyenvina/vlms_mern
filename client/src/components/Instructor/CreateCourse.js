@@ -71,7 +71,7 @@ class CreateCourse extends React.Component {
 	onSubmitHandler(event) {
 		event.preventDefault();
 	    let course_title = this.state.courseForm.title.value;
-		alert('course name = '+course_title);
+		//alert('course name = '+course_title);
 
 		let course_category_id = this.state.courseForm.course_category_id.value;
 		alert('course_category_id = '+course_category_id);
@@ -82,12 +82,12 @@ class CreateCourse extends React.Component {
 		};
 
 		this.props.createCourse(course);
-        alert('redirecting...');
+        //alert('redirecting...');
 		this.setState({isRedirect: true});
 	}
 
 	onFormSubmit(e){
-		alert('on form submit');
+		//alert('on form submit');
       	e.preventDefault();
     }
 
@@ -126,7 +126,7 @@ class CreateCourse extends React.Component {
 		}
 
 		if(this.state.isRedirect) {
-			return  <Redirect to="/instructor/manage_courses" /> ;
+			return  <Redirect to="/instructor/manage_course" /> ;
 		}
 		let form = (
 			<Form onSubmit={this.onSubmitHandler}>

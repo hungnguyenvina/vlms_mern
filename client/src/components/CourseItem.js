@@ -11,7 +11,7 @@ class CourseItem extends Component {
     }
 
     addCourseToCart = (courseID) => {
-      alert('add to cart');
+      //alert('add to cart');
       this.props.addCourseToCart(courseID);
       let me=this;
       setTimeout(function(){ me.props.history.push('/cart'); }, 2000);

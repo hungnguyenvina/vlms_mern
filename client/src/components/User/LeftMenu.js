@@ -13,21 +13,21 @@ class LeftMenu extends Component {
   
   componentDidMount() {
     const courseID = this.props.match.params.id;
-    alert("courseID = "+courseID);
+    //alert("courseID = "+courseID);
     this.props.loadCourseCurriculum(courseID);
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('receive props');
+    //console.log('receive props');
     const role = nextProps.user.role;
-    alert('role='+role);
+    //alert('role='+role);
     const me=this;
     if(role === 1) {
-      alert('is instructor');
+      //alert('is instructor');
       setTimeout(function(){ me.props.history.push('/instructor/manage_course'); }, 2000);
     }
     const curriculums = nextProps.curriculum;
-    console.log(curriculums);
+    //console.log(curriculums);
     let sectionArrayDistinct = [];
     let sectionArray = [];
     let lessionArray = [];
@@ -60,7 +60,7 @@ class LeftMenu extends Component {
     }
 
     const courseID = this.props.match.params.id;
-    console.log(sectionArray);
+    //console.log(sectionArray);
     let leftMenu=[];
     for(var k=0;k<sectionArray.length;k++){
       let subLeftMenu=[];
@@ -87,13 +87,13 @@ class LeftMenu extends Component {
               </Menu.SubMenu>);
       leftMenu.push(x);
     }
-    console.log(leftMenu);
+    //console.log(leftMenu);
     this.setState({leftMenu:leftMenu});
   }
 
   render() {
-    console.log('render in leftmenu of user...');
-    console.log(this.props.user);
+    //console.log('render in leftmenu of user...');
+    //console.log(this.props.user);
     return (
       <div>
         <Menu

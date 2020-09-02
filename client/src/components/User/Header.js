@@ -7,8 +7,8 @@ class Header extends Component {
 
     constructor(props) {
         super(props);
-        console.log('Header in user layout');
-        console.log(props.user);
+        //console.log('Header in user layout');
+        //console.log(props.user);
         this.state = {
           isAdmin: props.user.isAdmin,
           name: props.user.name
@@ -20,14 +20,14 @@ class Header extends Component {
     }
 
     logOut = () => {
-        alert('logout...');
+        //alert('logout...');
         this.props.logout();
         this.props.history.push('/login');
     }
     
     componentWillReceiveProps(nextProps) {
-        console.log('receive props');
-        console.log(nextProps.user);
+        //console.log('receive props');
+        //console.log(nextProps.user);
         if(!nextProps.user.loginSuccess) {
             //alert('logout');
             //this.setState({

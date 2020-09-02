@@ -5,8 +5,8 @@ import LeftMenu from './LeftMenu';
 import  { Layout } from 'element-react';
 
 const UserLayout = (props) => {
-    console.log('user layout...');
-    console.log(props);
+    //console.log('user layout...');
+    //console.log(props);
     return ( 
         <div>
             <Header {...props} />

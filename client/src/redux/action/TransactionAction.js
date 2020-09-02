@@ -10,9 +10,9 @@ export const loadUserTransactionSuccess = (data) => {
 
 export const loadUserTransactions = () => {
     return (dispatch) => {
-        axios.get('http://localhost:8000/api/user/transactions')
+        axios.get('http://localhost:8000/api/users/transactions')
             .then(res => {
-                console.log(res.data);
+                //console.log(res.data);
                 dispatch(loadUserTransactionSuccess(res.data));
             }).catch(error => {
 
@@ -30,9 +30,9 @@ export const loadUserTransactionDetailSuccess = (transactionID,data) => {
 
 export const loadUserTransactionsDetail = (transactionID) => {
     return (dispatch) => {
-        axios.get('http://localhost:8000/api/user/transactions/detail/'+transactionID)
+        axios.get('http://localhost:8000/api/users/transactions/detail/'+transactionID)
             .then(res => {
-                console.log(res.data);
+                //console.log(res.data);
                 dispatch(loadUserTransactionDetailSuccess(transactionID,res.data));
             }).catch(error => {
 

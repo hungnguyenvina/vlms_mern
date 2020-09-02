@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
 export const loadQuestionCategorySuccess = (data) => {
-    console.log('in action2: ',data);
+    //console.log('in action2: ',data);
     return {
         type: actionTypes.LOAD_QUESTION_CATEGORIES_SUCCESS,
         payload: data
@@ -13,7 +13,7 @@ export const loadQuestionCategory = () => {
     return (dispatch) => {
         axios.get('http://localhost:3004/api/question_categories')
             .then(res => {
-                console.log('in action:',res.data);
+                //console.log('in action:',res.data);
                 dispatch(loadQuestionCategorySuccess(res.data));
             }).catch(error => {
 
@@ -30,7 +30,7 @@ export const deleteQuestionCategorySuccess = (questionCategoryID) => {
 
 export const deleteQuestionCategory = (questionCategoryID) => {
     return (dispatch) => {
-        axios.delete('http://localhost:3004/api/question_category/'+questionCategoryID)
+        axios.delete('http://localhost:3004/api/question_categories/'+questionCategoryID)
             .then(res => {
                 dispatch(deleteQuestionCategorySuccess(questionCategoryID));
             }).catch(error => {
@@ -48,10 +48,10 @@ export const createQuestionCategorySuccess = (data) => {
 
 export const createQuestionCategory = (questionCategory) => {
     return (dispatch) => {
-        axios.post('http://localhost:3004/api/question_category/',questionCategory)
+        axios.post('http://localhost:3004/api/question_categories/',questionCategory)
             .then(res => {
-                console.log('result from api');
-                console.log(res.data);
+                //console.log('result from api');
+                //console.log(res.data);
                 dispatch(createQuestionCategorySuccess(res.data));
             }).catch(error => {
 
@@ -69,11 +69,11 @@ export const updateQuestionCategorySuccess = (id,data) => {
 
 export const updateQuestionCategory = (id,questionCategory) => {
     return (dispatch) => {
-        axios.put('http://localhost:3004/api/question_category/'+id,questionCategory)
+        axios.put('http://localhost:3004/api/question_categories/'+id,questionCategory)
             .then(res => {
-                console.log('after call api updsate question category');
-                console.log(res.data);
-                console.log(id);
+                //console.log('after call api updsate question category');
+                //console.log(res.data);
+                //console.log(id);
                 dispatch(updateQuestionCategorySuccess(id,res.data.questionCategory));
             }).catch(error => {
 

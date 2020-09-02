@@ -57,22 +57,28 @@ class UpdateCourseCurriculum extends Component {
         let currentLessions= [
             ...currentSections[sectionIndex].props.lessions
         ];
-        
-        let updatedCurrentLession= currentLessions.filter(item=> {
-            return item.id!==parseInt(lessionIndex)
+        console.log('currentLessions');
+        console.log(currentLessions);
+        //let updatedCurrentLession= currentLessions.filter(item=> {
+        //    return item.id!==parseInt(lessionIndex)
+        //});
+        let updatedCurrentLession= currentLessions.filter((item,index)=> {
+            alert('index='+index);
+            return index!==parseInt(lessionIndex)
         });
+
         console.log('lessions after delete...');
         console.log(updatedCurrentLession);
 
         let updatedCurrentSection= currentSections.map(item=> {
             console.log(item);
-           alert('item.props.id : '+item.props.id);
-            alert('indexSectionFound : '+ sectionIndex);
-           // alert('lession  : '+ item.props.lessions.length);
-             // alert('iterate j=='+j);
-              //  alert('item.props.id:'+item.props.id);
+           //alert('item.props.id : '+item.props.id);
+            //alert('indexSectionFound : '+ sectionIndex);
+            //alert('lession  : '+ item.props.lessions.length);
+           
+                //alert('item.props.id:'+item.props.id);
                 if(parseInt(item.props.id)===parseInt(sectionIndex)) {
-                    alert('xxxxxxxxxx'+item.props.id);
+                    //alert('xxxxxxxxxx'+item.props.id);
                     return <CurriculumSectionItemHOC
                             key={sectionIndex}
                             id={sectionIndex}
@@ -88,26 +94,19 @@ class UpdateCourseCurriculum extends Component {
                 else{
                     return item;
                 }
-            
-            
-                
-                
-            
-            
         })
 
-        console.log('current section,,,,');
-        console.log(updatedCurrentSection);
-
-
+        //console.log('current section,,,,');
+        //console.log(updatedCurrentSection);
         currentCurriculum.sections = updatedCurrentSection;
-        console.log('end update section title');
-        console.log(currentCurriculum);
+        //console.log('end update section title');
+        //console.log(currentCurriculum);
         this.setState({curriculum: currentCurriculum});
     }
 
     componentDidMount() {
-        this.props.loadCourseCurriculum("5cc6b7f7fe71713474d6c760");
+        const courseID = this.props.match.params.id;
+        this.props.loadCourseCurriculum(courseID);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -135,10 +134,11 @@ class UpdateCourseCurriculum extends Component {
                 sectionArrayDistinct.push(sectionID);
                 let newSection =  
                 { 
+                    section_id: sectionID,
                     title: curriculums[i].section_id.name,
                     description: '',
                     lessions:lessionArray.filter(item=> {
-                        return item.section_id != sectionID
+                        return item.section_id == sectionID
                     })
                 }
         
@@ -153,6 +153,7 @@ class UpdateCourseCurriculum extends Component {
             arrays.push( <CurriculumSectionItemHOC
                 key={i}
                 id={i}
+                section_id = {sectionArray[i].section_id} 
                 section_title={sectionArray[i].title} 
                 noOfSections={sectionArray.length} 
                 lessions = {sectionArray[i].lessions}
@@ -164,7 +165,7 @@ class UpdateCourseCurriculum extends Component {
         }
 
         currentCurriculum.sections = arrays;
-        //console.log(arrays);
+        console.log(arrays);
         this.setState({curriculum: currentCurriculum});
 
     }
@@ -228,25 +229,48 @@ class UpdateCourseCurriculum extends Component {
     }
 
     updateCourseCurriculum = () => {
-        alert('update course curriculum');
-        console.log(this.state.curriculum);
-        const sections = this.state.curriculum.sections;
-        const finalSections = sections.map(item=> {
-            const itemSection = {
-                section_title: item.props.section_title,
-                lessions: item.props.lessions
-            }
-            return itemSection;
-        });
-        console.log(finalSections);
-        for(var j=0;j<finalSections.length;j++)
+        //alert('update course curriculum');
+        console.log('this.state.curriculum');
+        console.log(this.state.curriculum.sections);
+       
+        let isValidCurriculum = true;
+        let message = "";
+        if(this.state.curriculum.sections.length===0)
         {
-            this.props.updateCourseCurriculum("5cc6b7f7fe71713474d6c760",finalSections[j]);
+            isValidCurriculum=false;
+            message= "Please create at least one section!";
+        }
+        else{
+            this.state.curriculum.sections.every(function (sectionItem) {
+                console.log(sectionItem);
+                if(sectionItem.props.lessions.length===0) {
+                    isValidCurriculum=false;
+                    message= "Each section must has at least one lession!";
+                    return false;
+                }
+            });
+        }
+        if(!isValidCurriculum) {
+            alert(message);
+        }
+        else {
+            const sections = this.state.curriculum.sections;
+            const finalSections = sections.map(item=> {
+                const itemSection = {
+                    section_id: item.props.lessions[0].section_id,
+                    section_title: item.props.section_title,
+                    lessions: item.props.lessions
+                }
+                return itemSection;
+            });
+            console.log(finalSections);
+            const courseID = this.props.match.params.id;
+            this.props.updateCourseCurriculum(courseID,{sections:finalSections});
         }
     }
     
     deleteSection = (sectionIndex) => {
-        alert('delete section :'+sectionIndex);
+        //alert('delete section :'+sectionIndex);
         let currentCurriculum = {...this.state.curriculum};
         let currentSections = [
             ...currentCurriculum.sections,
@@ -257,31 +281,31 @@ class UpdateCourseCurriculum extends Component {
             return item.props.id!==sectionIndex
         });
 
-        console.log('currentSections');
-        console.log(updatedCurrentSections);
+        //console.log('currentSections');
+        //console.log(updatedCurrentSections);
 
 
         currentCurriculum.sections = updatedCurrentSections;
-        console.log('end update section title');
-        console.log(currentCurriculum);
+        //console.log('end update section title');
+        //console.log(currentCurriculum);
         this.setState({curriculum: currentCurriculum});
     }
 
     updateSectionTitle = (section_content) => {
-        alert('section tilte : '+section_content.section_title);
+        //alert('section tilte : '+section_content.section_title);
         let currentCurriculum = {...this.state.curriculum};
-        console.log('currentCurriculum.................................');
-        console.log(currentCurriculum);
+        //console.log('currentCurriculum.................................');
+        //console.log(currentCurriculum);
         let currentSections = [
                                 ...currentCurriculum.sections,
                                 
                               ];
-        console.log('currentSections.................................');
-        console.log(currentSections);
+        //console.log('currentSections.................................');
+        //console.log(currentSections);
         let indexSectionFound=0;
         for (var i = 0; i < currentSections.length; i++) {
             if(i==section_content.section_index) {
-                alert('this section'+i);
+                //alert('this section'+i);
                 //currentSections[i].props.section_title = section_content.section_title;
                 indexSectionFound=i;
             }
@@ -289,11 +313,11 @@ class UpdateCourseCurriculum extends Component {
 
         let updatedCurrentSection= currentSections.map(item=> {
             console.log(item);
-            alert('item.props.idzzz : '+item.props.id);
-            alert('indexSectionFound : '+ indexSectionFound);
+            //alert('item.props.idzzz : '+item.props.id);
+            //alert('indexSectionFound : '+ indexSectionFound);
             if(parseInt(item.props.id)===parseInt(indexSectionFound)) {
                 
-                alert(section_content.section_title);
+                //alert(section_content.section_title);
                 return <CurriculumSectionItemHOC
                             key={indexSectionFound}
                             id={indexSectionFound}
@@ -312,50 +336,54 @@ class UpdateCourseCurriculum extends Component {
         })
       
 
-        console.log('currentSections');
-        console.log(updatedCurrentSection);
+        //console.log('currentSections');
+        //console.log(updatedCurrentSection);
 
 
         currentCurriculum.sections = updatedCurrentSection;
-        console.log('end update section title');
-        console.log(currentCurriculum);
+        //console.log('end update section title');
+        //console.log(currentCurriculum);
         this.setState({curriculum: currentCurriculum});
     }
 
     updateLessionContent = (section_index,lession) => {
-        alert('lession index in  update curri:'+ lession.lession_index);
+        //alert('lession index in  update curri:'+ lession.lession_index);
         //alert('lession type in update curri:'+ lession.lession_type);
         //alert('lession content in  update curri:'+ lession.lession_content);
         var lession_index = lession.lession_index;
         let currentCurriculum = {...this.state.curriculum};
-        console.log('currentCurriculum.................................');
-        console.log(currentCurriculum);
+        //console.log('currentCurriculum.................................');
+        //console.log(currentCurriculum);
         let currentSections = [
                                 ...currentCurriculum.sections
                               ];
 
         for (var i = 0; i < currentSections.length; i++) {
             if(parseInt(i)===parseInt(section_index)) {
-                alert('this section'+i);
+                //alert('this section'+i);
                 let isFoundLession = "0";
                 for (var j= 0; j < currentSections[i].props.lessions.length; j++) {
                     if(parseInt(j)===parseInt(lession_index))
                     {
+                        console.log('yyyyyyyyyyyy:'+lession_index+"-"+currentSections[i].props.lessions[j].id);
+                        console.log(currentSections[i]);
                         isFoundLession="1";
-                        alert('this lession'+j+'- '+lession.lession_title + "-"+ lession.lession_content);
+                        //alert('this lession'+j+'- '+lession.lession_title + "-"+ lession.lession_content);
                         let currentLession = {
-                            id: j,
+                            id: currentSections[i].props.lessions[j].id,
+                            section_id: currentSections[i].props.section_id,
                             name: lession.lession_title,
                             content: lession.lession_content,
                         };
                         currentSections[i].props.lessions[lession_index] = currentLession;
                     }
                 }
-                alert('isFoundLession='+isFoundLession);
+                //alert('isFoundLession='+isFoundLession);
                 if(isFoundLession==="0") {
-                    alert('add new lession: '+currentSections[section_index].props.lessions.length);
+                    //alert('add new lession: '+currentSections[section_index].props.lessions.length);
                     let currentLession = {
                         id: currentSections[i].props.lessions.length,
+                        section_id: currentSections[i].props.section_id,
                         name: lession.lession_title,
                         content: lession.lession_content
                     };
@@ -371,12 +399,12 @@ class UpdateCourseCurriculum extends Component {
     }
 
     addSection = () => {
-        alert('add section');
+        //alert('add section');
         let currentCurriculum = {...this.state.curriculum};
-        console.log('currentCurriculum.................................');
-        console.log(currentCurriculum);
+        //console.log('currentCurriculum.................................');
+        //console.log(currentCurriculum);
         let newSectionIndex = parseInt(currentCurriculum.sections.length);
-        alert('newSectionIndex:'+newSectionIndex);
+        //alert('newSectionIndex:'+newSectionIndex);
         const newSectionTitle = "your section title";
         const lessions=[];
         const newLesionIndex=0;
@@ -397,8 +425,8 @@ class UpdateCourseCurriculum extends Component {
         ];
         
         currentCurriculum.sections = currentSections;
-        console.log('end update lession content');
-        console.log(currentCurriculum);
+        //console.log('end update lession content');
+        //console.log(currentCurriculum);
         this.setState({curriculum: currentCurriculum});
     }
 
@@ -431,7 +459,7 @@ class UpdateCourseCurriculum extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
+    //console.log(state);
       return {
           curriculum : state.courses.curriculum
       };

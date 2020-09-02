@@ -73,14 +73,14 @@ class Cart extends Component {
     }
 
     removeCartItem = (data) => {
-      console.log(data);
+      //console.log(data);
       const courseID = data.data.course_id;
-      alert('delete course with id:'+courseID);
+      //alert('delete course with id:'+courseID);
       this.props.removeCourseFromCart(courseID);
     }
     componentWillReceiveProps(nextProps) {
-      console.log('componentWillReceiveProps');
-      console.log(nextProps);
+      //console.log('componentWillReceiveProps');
+      //console.log(nextProps);
       const cartDetail = nextProps.cartDetail;
       let data=[];
       let total=0;
@@ -111,7 +111,7 @@ class Cart extends Component {
       this.setState({data,total});
     }
     componentDidMount(){
-      alert(window.location.href);
+      //alert(window.location.href);
       //console.log('component did mount....');
       //console.log(this.props.user);
       let courseIDArray = [];
@@ -168,8 +168,8 @@ class Cart extends Component {
 }
  
 const mapStateToProps = state => {
-  console.log('mapStateToProps in cart');
-  console.log(state.carts);
+  //console.log('mapStateToProps in cart');
+  //console.log(state.carts);
   return {
     cartDetail: state.carts.cartDetail
   };

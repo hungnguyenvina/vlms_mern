@@ -12,6 +12,7 @@ import VideoPlayer from '../../components/Jplayer/videoPlayer';
 import { reducer as jPlayers } from 'react-jplayer';
 import { actions } from 'react-jplayer';
 import CurriculumLessionItemHOC from './CurriculumLessionItemHOC';
+import CurriculumSectionItemHOCCSS from './CurriculumSectionItemHOC.css';
 // Styles the jPlayer to look nice
 import 'react-jplayer/src/less/skins/sleek.less';
 // Styles Play/Pause/Mute etc when icons (<i />) are used for them
@@ -52,42 +53,42 @@ class CurriculumSectionItemHOC extends React.Component {
     }
 
     submitUpload() {
-        alert('upload');
+        //alert('upload');
         this.refs.upload.submit();
     }
 
     handleChange = (file, fileList) => {
         //alert('on changexx');
-        console.log(file);
-        console.log(fileList);
-        console.log('file name: '+file.raw.name);
-        console.log(file.raw);
+        //console.log(file);
+        //console.log(fileList);
+        //console.log('file name: '+file.raw.name);
+        //console.log(file.raw);
         this.createImage(file.raw);
     }
 
     getVideoDuration = () => {
-        alert('get video duration');
+        //alert('get video duration');
 
         for(let key in this.props.video_duration_text) {
 			console.log(key);
             if(this.props.video_duration_text[key].durationText)
             {
-             console.log('video duration text =' + this.props.video_duration_text[key].durationText);
+             //console.log('video duration text =' + this.props.video_duration_text[key].durationText);
             }
 		}
     }
 
     fileUpload(image,fileName){
-		console.log('file upload');
-		console.log(image);
+		//console.log('file upload');
+		//console.log(image);
 		const url = 'http://localhost:8000/api/fileupload';
 		const formData = {file: image,filename:fileName}
 		return  post(url, formData)
 				.then(response => {
                         let media = ""; 
-					    console.log('file response....'+ this.state.image);
+					    //console.log('file response....'+ this.state.image);
                         let urlResponse = response.data.content;
-                        alert('urlResponse : '+urlResponse);
+                        //alert('urlResponse : '+urlResponse);
                         var indexMP4 = urlResponse.endsWith("mp4");
                         var indexWEBMV = urlResponse.endsWith("webm");
                         var indexOGV = urlResponse.endsWith("ogv");
@@ -137,10 +138,10 @@ class CurriculumSectionItemHOC extends React.Component {
                             };
                         }
 
-                        alert('this.props.id : '+this.props.id);
-                        alert('this.state.current : '+this.state.current);
-                        console.log('media : '+media);
-                         console.log(media);
+                        //alert('this.props.id : '+this.props.id);
+                        //alert('this.state.current : '+this.state.current);
+                        //console.log('media : '+media);
+                        // console.log(media);
 
                         this.props.setMedia('jplayer'+this.state.current, media);
                         //this.setState({image: response.data.content});
@@ -152,8 +153,8 @@ class CurriculumSectionItemHOC extends React.Component {
       //alert('create image');
       let reader = new FileReader();
       reader.onload = (e) => {
-		console.log('picture result');
-		console.log(e.target.result);
+		//console.log('picture result');
+		//console.log(e.target.result);
         this.setState({image: e.target.result })
         this.fileUpload(e.target.result,file.name);
       };
@@ -173,19 +174,19 @@ class CurriculumSectionItemHOC extends React.Component {
     changeSectionTitle = (value) => {
         let sectionContent = {...this.state.sectionContent };
         sectionContent['section_title'] = value;
-        console.log(value);
+        //console.log(value);
         this.setState({sectionContent});
     }
 
     addLession = (sectionIndex,noOfLessions) => {
        
         //let lessionID = this.props.id+"_"+this.state.sections.length;
-        console.log('adding lession');
-        console.log(this.state.sections);
+        //console.log('adding lession');
+        //console.log(this.state.sections);
         let lessionID = sectionIndex + "_" + noOfLessions;
         //alert('add lesssion'+lessionID);
         const newLessionTitle = 'your new lession name';
-        const newLessionContent = 'http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v';
+        const newLessionContent = '';//'http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v';
         const newLessionIndex = noOfLessions;
 
         let arrays = [
@@ -198,11 +199,14 @@ class CurriculumSectionItemHOC extends React.Component {
 							lession_content={newLessionContent}
                             lession_index={newLessionIndex}
                             section_index= {sectionIndex}
+                            onDeleteLession={(lessionID) => this.deleteLession(lessionID)} 
                             onLessionChange={(sectionIndex,newLessionContent) => this.updateLessionContent(sectionIndex,newLessionContent)} 
                        />
+
+                       
         ];
-   console.log('here am i');
-        console.log(arrays);
+   //console.log('here am i');
+        //console.log(arrays);
         
         const lessionContent = {
             lession_index: newLessionIndex,
@@ -210,8 +214,8 @@ class CurriculumSectionItemHOC extends React.Component {
             lession_content:newLessionContent,
             lession_title: newLessionTitle
         }
-        console.log('lessionContent....');
-        console.log(lessionContent);
+        //console.log('lessionContent....');
+        //console.log(lessionContent);
         this.props.onLessionChange123(sectionIndex,lessionContent);
         this.setState({sections: arrays});
     }
@@ -226,8 +230,8 @@ class CurriculumSectionItemHOC extends React.Component {
         this.setState({
             display_section_title_input: !this.state.display_section_title_input
         })
-        console.log('save new section title/......');
-        console.log(this.state.sectionContent);
+        //console.log('save new section title/......');
+        //console.log(this.state.sectionContent);
         this.props.onSectionChange(this.state.sectionContent);
     }
 
@@ -249,24 +253,27 @@ class CurriculumSectionItemHOC extends React.Component {
             lession_content:lession_content.lession_content,
             lession_title: lession_content.lession_title
         }
-        console.log('lession');
-        console.log(lessionContent);
-        console.log('thisssssssssssss.dddđ....');
-        console.log(this.props);
+        //console.log('lession');
+        //console.log(lessionContent);
+        //console.log('thisssssssssssss.dddđ....');
+        //console.log(this.props);
         this.props.onLessionChange123(sectionIndex,lessionContent);
     }
     
     componentWillReceiveProps(nextProps) {
-        alert('compo will receive props');
+        alert('[CurriculumSectionItemHoc] :compo will receive props');
+        console.log('[CurriculumSectionItemHoc] :nextProps');
         console.log(nextProps);
-        console.log('nextProps.lessions:');
+        //console.log('nextProps.lessions:');
+        console.log('[CurriculumSectionItemHoc] : nextProps.lessions');
         console.log(nextProps.lessions);
 
         let arrays = [];
         for (var i = 0; i < nextProps.lessions.length; i++) {
-            alert('nextProps.lessions[i].name = '+nextProps.lessions[i].name);
-            alert('nextProps.lessions[i].content = '+nextProps.lessions[i].content);
-            let lessionID = nextProps.id+"_"+nextProps.lessions[i].id;
+            //alert('nextProps.lessions[i].name = '+nextProps.lessions[i].name);
+            //alert('nextProps.lessions[i].content = '+nextProps.lessions[i].content);
+            //let lessionID = nextProps.id+"_"+nextProps.lessions[i].id;
+            let lessionID = nextProps.id+"_"+i;
             alert('lessionID:'+lessionID);
             let sectionIndex =nextProps.id;
             let lesssionContent = nextProps.lessions[i].content;
@@ -306,6 +313,7 @@ class CurriculumSectionItemHOC extends React.Component {
         for (var i = 0; i < this.props.lessions.length; i++) {
             let lessionID = this.props.id+"_"+i;
             let sectionIndex =this.props.id;
+            alert('lessionID'+lessionID);
             arrays.push( <CurriculumLessionItemHOC
                             key={lessionID}
                             isHidden="true"
@@ -329,13 +337,15 @@ class CurriculumSectionItemHOC extends React.Component {
 
     clickMe = (e) => { 
         e.preventDefault();
-        console.log('clickme');
-        console.log(e.target);
+        //console.log('clickme');
+        //console.log(e.target);
         //alert('e.target.id : '+e.target.id);
         this.setState({current:e.target.id});
     }
 
     render() {
+        alert('CurriculumSectionItemHoc render...');
+        
         let x = this.state.sections.map(item => {
                 return item;
         });
@@ -352,7 +362,7 @@ class CurriculumSectionItemHOC extends React.Component {
         let btnDeleteSectionID = `btnDeleteSection_${this.props.id}`;
         let btnCancelUpdateSectionTitle = `btnCancelSectionTitle_${this.props.id}`;
         return (
-				<div className='divCourseSection'>
+				<div className="divCourseSection">
                     <div style={{display:this.state.display_section_title_input==false?'inline-block':'none'}}>
                         <label className="lblSectionTitle">{this.props.section_title}</label>
                         <Button style={{marginBottom:'20px'}} onClick={() => this.showChangeSectionTitle()} size="small" type="warning">Change</Button>

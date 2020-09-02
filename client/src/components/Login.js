@@ -16,8 +16,8 @@ class Login extends Component {
   }
 
   onSubmit = () =>{
-    console.log('user info');
-    console.log(this.state.user);
+    //console.log('user info');
+    //console.log(this.state.user);
     this.props.login(this.state.user);
   }
 
@@ -32,23 +32,23 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('component will receive props');
-    console.log(nextProps);
-    console.log(nextProps.loginSuccess);
+    //console.log('component will receive props');
+    //console.log(nextProps);
+    //console.log(nextProps.loginSuccess);
     if(nextProps.loginSuccess) {
       const role = nextProps.user.role;
-      alert('role : '+ role);
+      //alert('role : '+ role);
       var me=this;
       if(role === 0) {
-        alert('is admin');
+        //alert('is admin');
         setTimeout(function(){ me.props.history.push('/admin/course_categories'); }, 2000);
       }
       else if(role === 1) {
-        alert('is instructor');
+        //alert('is instructor');
         setTimeout(function(){ me.props.history.push('/instructor/manage_course'); }, 2000);
       }
       else if(role === 2) {
-        alert('is user');
+        //alert('is user');
         setTimeout(function(){ me.props.history.push('/'); }, 2000);
       }
       //this.props.history.push('/cart');

@@ -10,7 +10,7 @@ import {store} from './redux/store/store';
 
 
 ReactDOM.render(<Provider store={store}>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
         <App/>
     </BrowserRouter>
 </Provider>, document.getElementById('root'));

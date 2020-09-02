@@ -24,7 +24,7 @@ class TakeCourse extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps);
+		//console.log(nextProps);
         const oldLessionID = this.props.match.params.lession_id;
         const newLessionID = nextProps.match.params.lession_id;
         //alert('this lession id : '+this.props.match.params.lession_id);

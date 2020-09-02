@@ -537,7 +537,7 @@ class CourseCategories extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.course_categories);
+  //console.log(state.course_categories);
 	return {
 		course_categories : state.course_categories
 	};

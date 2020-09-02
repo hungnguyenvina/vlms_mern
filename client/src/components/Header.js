@@ -18,39 +18,36 @@ class Header extends Component {
 
 
     logOut = () => {
-        alert('logout...');
+        //alert('logout...');
         this.props.logout();
         this.props.history.push('/login');
     }
 
     redirectToPrivatePage = () => {
-        alert('welcome');
+        //alert('welcome');
         const role = this.props.user.role;
         let me=this;
         if(role === 0) {
-            alert('is admin');
+            //alert('is admin');
             setTimeout(function(){ me.props.history.push('/admin/course_categories'); }, 2000);
           }
           else if(role === 1) {
-            alert('is instructor');
+            //alert('is instructor');
             setTimeout(function(){ me.props.history.push('/instructor/manage_course'); }, 2000);
           }
           else if(role === 2) {
-            alert('is user');
+            //alert('is user');
             setTimeout(function(){ me.props.history.push('/'); }, 2000);
           }
     }
     componentDidMount() {
-        console.log(this.props);
-        
-        
+        //console.log(this.props);
         if("undefined" !== typeof(this.props.users) )
         {
-            
             if(!this.props.users.loginSuccess) {
                 if("undefined" !== typeof(this.props.users.user) )
                 {
-                    alert('ddd');
+                    //alert('ddd');
                     this.setState({
                         isAdmin: false,
                         name: ''
@@ -58,7 +55,7 @@ class Header extends Component {
                 }
             }
             else {
-                alert('isEmpty');
+                //alert('isEmpty');
                 this.setState({
                     isAdmin: this.props.users.user.isAdmin,
                     name: this.props.users.user.name
