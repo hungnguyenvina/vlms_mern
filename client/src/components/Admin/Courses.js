@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Loading , Tag, Table, Pagination, Form, Dialog } from 'element-react';
-import {loadCourses} from '../../redux/action/CourseAction';
+import {loadCourses,approveRejectCourse} from '../../redux/action/CourseAction';
 import {hoc} from '../hoc/hoc';
 import AdminLayout from './AdminLayout';
 import UIInput from '../UI/UIInput';
@@ -36,11 +36,11 @@ class Courses extends React.Component {
                 elementConfig : {
                   name: 'approveRejectStatus',
                   options : [
-                    { value : '0', displayValue : 'Approve', parentName:''  },
-                    { value : '1', displayValue : 'Reject', parentName:'' }
+                    { value : '2', displayValue : 'Approve', parentName:''  },
+                    { value : '3', displayValue : 'Reject', parentName:'' }
                   ],
                   defaultOption: {
-                    value: '0', displayValue: 'Approve'
+                    value: '2', displayValue: 'Approve'
                   }
                 },
                 label: 'Approve/Reject',
@@ -71,7 +71,7 @@ class Courses extends React.Component {
                 {
                   label: "Name",
                   prop: "name",
-                  width: 450,
+                  width: 380,
                   align:'left',
                   render: function(data){
                     return <Tag>{data.title}</Tag>
@@ -89,7 +89,7 @@ class Courses extends React.Component {
                 {
                   label: "Description",
                   prop: "description",
-                  width: 380,
+                  width: 280,
                   align:'left',
                   render: function(data){
                     return <span>{data.description}</span>
@@ -98,8 +98,8 @@ class Courses extends React.Component {
                 {
                   label: "Status",
                   prop: "status",
-                  width: 120,
-                  align:'left',
+                  width: 100,
+                  align:'center',
                   render: function(data){
                     if(data.status===0) {
                       return <Button type="info" size="small" >New</Button>
@@ -114,7 +114,7 @@ class Courses extends React.Component {
                       return <Button type="danger" size="small" >Rejected</Button>
                     }
                     else {
-                      return <Button type="danger" size="small">Disable</Button>
+                      return <Button type="info" size="small" >New</Button>
                     }
                   }
                 },
@@ -221,9 +221,10 @@ class Courses extends React.Component {
     onSubmitHandler(event) {
       event.preventDefault();
       const messageForInstructor = this.state.approveCourseForm['approveRejectMessage'].value;
-      const approveOrReject = this.state.approveCourseForm['approveRejectStatus'].value;
-      alert('messageForInstructor:'+messageForInstructor);
-      alert('approveOrReject:'+approveOrReject);
+      const approveOrRejectStatus = this.state.approveCourseForm['approveRejectStatus'].value;
+      const data = { messageToInstructor: messageForInstructor, status: approveOrRejectStatus };
+      this.props.approveRejectCourse(this.state.selectedCourseID, data);
+      this.setState({dialogVisible:false});
     }
 
     onChangeHandler(value,inputIdentifier){
@@ -336,7 +337,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  loadCourses:  dispatch(loadCourses())
+  loadCourses:  dispatch(loadCourses()),
+  approveRejectCourse: (courseID,courseStatus) => dispatch(approveRejectCourse(courseID,courseStatus))
 });
 
 export default hoc(Courses, mapStateToProps,mapDispatchToProps);

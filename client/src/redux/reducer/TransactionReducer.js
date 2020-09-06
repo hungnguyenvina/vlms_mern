@@ -18,6 +18,13 @@ export const TransactionReducer = (state = initialState.user_transactions,action
                 ...state,
                 user_transactions_detail: action.payload.data
             }      
+        case actionType.SAVE_USER_TRANSACTION_SUCCESS: 
+            console.log('SAVE_USER_TRANSACTION_SUCCESS reducer');
+            console.log(action.payload);
+            return {
+                ...state,
+                transactions: action.payload
+            };
         default : 
             return state;
     }

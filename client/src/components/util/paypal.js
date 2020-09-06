@@ -30,6 +30,7 @@ class Paypal extends Component {
         let env = 'sandbox'; // you can set here to 'production' for production
         let currency = 'USD'; // or you can set this value from your props or state
         let total = this.props.total; // same as above, this is the total amount (based on currency) to be paid by using Paypal express checkout
+        let item_list = this.props.item_list;
         // Document on Paypal's currency code: https://developer.paypal.com/docs/classic/api/currency_codes/
         
         const client = {
@@ -41,6 +42,7 @@ class Paypal extends Component {
             <div>
                 <PaypalExpressBtn 
                     env={env} 
+                    item_list={item_list}
                     client={client} 
                     currency={currency} 
                     total={total} 

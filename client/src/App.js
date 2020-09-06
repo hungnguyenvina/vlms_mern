@@ -21,6 +21,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Auth from './components/hoc/auth';
 import BecomeAnInstructor from './components/User/BecomeAnInstructor';
+import EnrolledCourses from './components/User/EnrolledCourses';
+import UpdateCourse from './components/Instructor/UpdateCourse';
 class App extends Component {
 
   componentDidMount(){
@@ -69,7 +71,9 @@ class App extends Component {
             <Route exact component={Auth(Courses,false)} path="/admin/courses"></Route>
             <Route exact component={Auth(CreateCourse,false)} path="/instructor/create_course"></Route>
             <Route exact component={Auth(ManageCourse,false)} path="/instructor/manage_course"></Route>
+            <Route exact component={Auth(UpdateCourse,false)} path='/instructor/update_course_info/:id' />
             <Route exact component={Auth(UpdateCourseCurriculum,false)} path='/instructor/update_course_curriculum/:id' />
+            <Route exact component={Auth(EnrolledCourses,false)} path="/user/manage_course"></Route>
             <Route exact component={Auth(TakeCourse,false)} path='/user/take_course/:id/:lession_id' />
             <Route exact component={Auth(BecomeAnInstructor,false)} path='/user/become_an_instructor' />
        </HomePage>

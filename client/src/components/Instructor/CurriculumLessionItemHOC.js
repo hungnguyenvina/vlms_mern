@@ -10,6 +10,7 @@ import 'react-jplayer/src/less/skins/sleek.less';
 import 'react-jplayer/src/less/controls/iconControls.less';
 import { Button,Upload, Input } from 'element-react';
 import 'element-theme-default';
+import CurriculumLessionItemHOCCSS from './CurriculumLessionItemHOC.css';
 import { flattenProp } from 'recompose';
 
 class CurriculumLessionItemHOC extends React.Component {

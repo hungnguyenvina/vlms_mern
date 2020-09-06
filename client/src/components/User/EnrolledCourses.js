@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import {Link} from 'react-router-dom';
 import { Button, Loading, Tag, Table, Pagination } from "element-react";
 import CourseImage from "../../images/course.png";
-import { loadInstructorCourses,deleteCourse,submitCourseForApproval } from "../../redux/action/CourseAction";
+import { loadUserEnrolledCourses } from "../../redux/action/CourseAction";
 import { hoc } from "../hoc/hoc";
-import InstructorLayout from './InstructorLayout';
-class ManageCourses extends Component {
+import UserLayout from './UserLayout';
+class EnrolledCourses extends Component {
   constructor(props) {
     super(props);
     let me = this;
@@ -20,7 +20,7 @@ class ManageCourses extends Component {
           label: "Category",
           prop: "category_parent_name",
           align: "left",
-          width: 180,
+          width: 230,
           render: function(data) {
             return (
               <span>
@@ -34,17 +34,17 @@ class ManageCourses extends Component {
         {
           label: "Name",
           prop: "name",
-          width: 300,
+          width: 230,
           align: "left",
           render: function(data) {
-            return <Link to={`/instructor/update_course_info/${data.id}`}>{data.title}</Link>;
+            return <Link to={`/user/take_course/${data.id}/${data.default_lession_id}`}>{data.title}</Link>;
           }
         },
         {
           label: "Fee($)",
           prop: "fee",
           width: 80,
-          align: "center",
+          align: "left",
           render: function(data) {
 			if (data.fee === 0) {
 				return (
@@ -64,7 +64,7 @@ class ManageCourses extends Component {
         {
           label: "Description",
           prop: "description",
-          width: 200,
+          width: 280,
           align: "left",
           render: function(data) {
             return <span>{data.description}</span>;
@@ -72,31 +72,17 @@ class ManageCourses extends Component {
         },
         {
           label: "Operations",
-          width: 270,
+          width: 180,
           align: "left",
           render: function(data) {
-            let buttonJSX="";
-            if(data.status===0) {
-              buttonJSX= <Button type="info" size="small" onClick={() => me.submitCourseForApproval(data,me)}>New</Button>
-            }
-            else if(data.status===1) {
-              buttonJSX= <Button type="warning" size="small" >Pending</Button>
-            }
-            else if(data.status===2) {
-              buttonJSX= <Button type="success" size="small" >Approved</Button>
-            }
-            else if(data.status===3) {
-              buttonJSX= <Button type="danger" size="small" onClick={() => me.submitCourseForApproval(data,me)}>Rejected</Button>
-            }
-            else {
-              buttonJSX= <Button type="info" size="small" onClick={() => me.submitCourseForApproval(data,me)}>New</Button>
-            }
+          
+           
 
             return (
+             
               <span>
-                  {buttonJSX}
-                  <Button type="danger" size="small" onClick={() => me.deleteCourse(data, me)}>Delete</Button>
-                  <Button type="info" size="small"><Link style={{ textDecoration: 'none',color:'#ffffff' }} to={`/instructor/update_course_curriculum/${data.id}`}>Curriculum</Link></Button>
+               
+                
               </span>
             );
           }
@@ -112,15 +98,6 @@ class ManageCourses extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  deleteCourse = (item,me) => {
-    this.props.deleteCourse(item.id);
-  }
-
-  submitCourseForApproval = (item,me) => {
-
-      const data = { status: 1 };
-      this.props.submitCourseForApproval(item.id, data);
-  }
 
   handleClick(event) {
     //alert("select page" + Number(event.target.id));
@@ -140,6 +117,7 @@ class ManageCourses extends Component {
           description: item.description,
           fee: item.fee,
           course_category_parent_name: item.course_category_name,
+          default_lession_id: item.default_lession_id,
           status: item.status
         });
       });
@@ -181,7 +159,7 @@ class ManageCourses extends Component {
     }
 
     return (
-      <InstructorLayout {...this.props}>
+      <UserLayout {...this.props}>
       <React.Fragment>
         <h3
           style={{
@@ -205,22 +183,21 @@ class ManageCourses extends Component {
           />
         </Loading>
       </React.Fragment>
-      </InstructorLayout>
+      </UserLayout>
     );
   }
 }
 
 const mapStateToProps = state => {
-  //console.log(state.courses);
+  console.log('mapStateToProps');
+  console.log(state.courses);
   return {
-    courses: state.courses.instructor_courses
+    courses: state.courses.user_courses
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  loadInstructorCourses: dispatch(loadInstructorCourses()),
-  deleteCourse: (courseID) => dispatch(deleteCourse(courseID)),
-  submitCourseForApproval: (courseID,courseStatus) => dispatch(submitCourseForApproval(courseID,courseStatus))
+  loadUserEnrolledCourses: dispatch(loadUserEnrolledCourses())
 });
 
-export default hoc(ManageCourses, mapStateToProps, mapDispatchToProps);
+export default hoc(EnrolledCourses, mapStateToProps, mapDispatchToProps);

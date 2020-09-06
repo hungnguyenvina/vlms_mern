@@ -1,7 +1,7 @@
-.divCourseSection {
+.divCourseLession {
     margin-left:20px;
     margin-top:20px;
     text-align:left;
-    border : 1px solid grey;
+    border : 1px dashed pink;
     padding:20px;
 }

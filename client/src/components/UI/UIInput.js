@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input,Select,Form} from 'element-react';
+import {Input,Select,Form, Button, Upload} from 'element-react';
 
 const UIInput  = (props) => {
     const errorStyle = {
@@ -27,11 +27,31 @@ const UIInput  = (props) => {
     }
     let inputElement = null;
     switch(props.elementType) {
+        
         case ('input') :
-            inputElement =  
-                <Form.Item label={props.label} labelWidth="120">
-                    <Input {...props.elementConfig} value={props.value} onChange={props.onChange} className="form-control" />
-                </Form.Item>;
+            if(props.elementConfig.type==='file') {
+                inputElement =  
+                    <Form.Item label={props.label} labelWidth="120">
+                        <Upload
+                            name={props.name}
+                            className="upload-demo"
+                            action={props.action}
+                            onPreview={props.onPreview}
+                            onRemove={props.onRemove}
+                            onChange={props.onChange}
+                            fileList={props.fileList2}
+                            listType="picture"
+                            tip={<div className="el-upload__tip"></div>}
+                            >
+                            <Button size="small" type="primary">Click to upload</Button>
+                        </Upload>    
+                    </Form.Item>;
+            } else {
+                inputElement =  
+                    <Form.Item label={props.label} labelWidth="120">
+                        <Input {...props.elementConfig} value={props.value} onChange={props.onChange} className="form-control" />
+                    </Form.Item>;
+            }
             break;
         case ('select') :
             if(props.elementConfig.defaultOption) {

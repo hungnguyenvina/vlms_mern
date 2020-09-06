@@ -11,7 +11,8 @@ class TakeCourse extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-			videoPlayer:'' 
+            isVideoContent:true,
+            lessionContent:''
         };
 	}
 
@@ -42,7 +43,7 @@ class TakeCourse extends React.Component {
         }
 		const currentLession =nextProps.lession[0];
 		const lessionContent = currentLession.content;
-		//alert('lession content: '+lessionContent);
+		alert('lession content: '+lessionContent);
 		let media = ""; 
 		var indexMP4 = lessionContent.endsWith("mp4");
 		var indexM4V = lessionContent.endsWith("m4v");
@@ -112,15 +113,31 @@ class TakeCourse extends React.Component {
 
                         //alert('this.props.id : '+this.props.id);
                         console.log('media : '+media);
+                        if(media===""){
+                            alert('lessionContent='+lessionContent);
+                            this.setState({isVideoContent:false, lessionContent:lessionContent});
+                        }
+                        else{
                         this.props.setMedia('VideoPlayer', media);
+                        }
         //}
 												
 	}
     render() {
-		return ( 
+      //  alert('render:'+this.state.isVideoContent);
+    let lessionContent = <div style={{width:'95%',margin:'20px',padding:'20px',textAlign:'left',height:'auto',minHeight:'300px',backgroundColor:'Lavender',margin:'20px',boder:'1px solid Green'}}>{this.state.lessionContent}</div>;
+        if(this.state.isVideoContent) {
+            lessionContent = (  <div style={{width:'95%',margin:'20px',padding:'20px',textAlign:'left',height:'auto',minHeight:'300px',backgroundColor:'Lavender',margin:'20px',boder:'1px solid Green'}}>
+               <VideoPlayer id="VideoPlayer" m4vURL="http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v" />;
+                </div>);
+           
+        }
+      //  alert(lessionContent);
+        return ( 
             <UserLayout {...this.props}>
                 <React.Fragment>
-                    <VideoPlayer id="VideoPlayer" m4vURL="http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v" />
+                  
+                    {lessionContent}
                 </React.Fragment>
             </UserLayout>
 		)

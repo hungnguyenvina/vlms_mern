@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Table, Button} from 'element-react';
 import { loadMultipleCourses,removeCourseFromCart } from '../redux/action/CartAction';
+import { saveUserTransaction } from '../redux/action/TransactionAction';
 import {hoc} from '../components/hoc/hoc';
 import renderHTML from 'react-render-html';
 import Paypal from '../components/util/paypal';
@@ -68,7 +69,9 @@ class Cart extends Component {
                   }
                 },
               ],
-              data: []
+              data: [],
+              dataForSave:[],
+              item_list:{}
          }
     }
 
@@ -84,6 +87,7 @@ class Cart extends Component {
       const cartDetail = nextProps.cartDetail;
       let data=[];
       let total=0;
+      let item_list_array=[];
       //course_title: 'React - The Complete Guide (including Hooks, Redux, React Router)',
       //          price: 29,
       //          quantity: 1,
@@ -96,8 +100,26 @@ class Cart extends Component {
           quantity: item.quantity,
           subTotal: item.fee*item.quantity 
         });
+
+        item_list_array.push({
+          name: item.title,
+          description: item.title,
+          quantity: item.quantity,
+          price: item.fee,
+          tax:'0.00',
+          sku: item.id,
+          currency: 'USD'
+        });
+
         total+= item.fee*item.quantity;
       })
+
+      let item_list_object = 
+      {
+        items: item_list_array,
+      };
+
+      let dataForSave = [...data];
 
       const totalHtml = renderHTML('<strong>Total</strong> : $' + total );
       data.push({
@@ -108,7 +130,7 @@ class Cart extends Component {
         subTotal: totalHtml
       });
 
-      this.setState({data,total});
+      this.setState({data,total,dataForSave,item_list:item_list_object});
     }
     componentDidMount(){
       //alert(window.location.href);
@@ -133,10 +155,32 @@ class Cart extends Component {
     }
 
     transactionSuccess = (data) => {
+      console.log('user info');
+      console.log(this.props.users);
       console.log(data);
+
+      const userTransactionObj = {
+        id: data.transactionID,
+        transaction_id: data.transactionID,
+        transaction_date: data.transactionDate,
+        user_id: this.props.users.user.id,
+        user_name: this.props.users.user.email,
+        payer_id: data.payerID,
+        payer_email: data.email,
+        payer_name: data.payerName,
+        total_amount: this.state.total,
+        currency_code: 'USD',
+        order_details: this.state.dataForSave,
+        transaction_details: this.state.dataForSave,
+        status: data.paymentStatus
+      }
+
+      console.log('transaction detail......................');
+      console.log(userTransactionObj);
+      this.props.saveUserTransaction(userTransactionObj);
       this.setState({
         showSuccess: true,
-        message: data.email
+        message: 'Congratulation! You have successfully enrolled in these courses. You can take these courses now.'
         
       })
     }
@@ -154,6 +198,7 @@ class Cart extends Component {
                 />
                 <Paypal 
                   total={this.state.total}
+                  item_list={this.state.item_list}
                   transactionError={(data)=>this.transactionError(data)}  
                   transactionCanceled={(data)=>this.transactionCanceled(data)}  
                   onSuccess={(data)=>this.transactionSuccess(data)}>  
@@ -171,13 +216,16 @@ const mapStateToProps = state => {
   //console.log('mapStateToProps in cart');
   //console.log(state.carts);
   return {
+    loginSuccess : state.users.loginSuccess,
+    users: state.users,
     cartDetail: state.carts.cartDetail
   };
 }
 
 const mapDispatchToProps = dispatch => ({
   loadMultipleCourses: (courseIDArray,userCart) => dispatch(loadMultipleCourses(courseIDArray,userCart)),
-  removeCourseFromCart: (courseID) => dispatch(removeCourseFromCart(courseID))
+  removeCourseFromCart: (courseID) => dispatch(removeCourseFromCart(courseID)),
+  saveUserTransaction: (transaction) => dispatch(saveUserTransaction(transaction))
 });
 
 export default hoc(Cart,mapStateToProps,mapDispatchToProps);

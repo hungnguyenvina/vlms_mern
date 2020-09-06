@@ -6,7 +6,8 @@ const initialState = {
     user_courses:[],
     instructor_courses:[],
     curriculum:[],
-    lession:{}
+    lession:{},
+    message:""
 };
 
 export const CourseReducer = (state = initialState,action) => {
@@ -44,10 +45,11 @@ export const CourseReducer = (state = initialState,action) => {
                 lession: action.payload
             }
         case actionType.LOAD_USER_COURSES_SUCCESS :
-            //console.log('payload COURSES:'+ action.payload.data);
+            console.log('payload COURSES:');
+            console.log(action.payload);
             return {
                 ...state,
-                user_courses: action.payload.data
+                user_courses: action.payload
             }
         case actionType.LOAD_INSTRUCTOR_COURSES_SUCCESS :
             //console.log('payload COURSES:'+ action.payload);
@@ -60,6 +62,12 @@ export const CourseReducer = (state = initialState,action) => {
             return {
                 ...state,
                 curriculum: action.payload
+            }
+        case actionType.UPDATE_COURSE_INFO_SUCCESS :
+            //console.log('payload UPDATE_COURSE_INFO_SUCCESS:'+ action.payload);
+            return {
+                ...state,
+                message: action.payload.message
             }
         case actionType.DELETE_COURSE_SUCCESS :
             const courseID = action.payload;

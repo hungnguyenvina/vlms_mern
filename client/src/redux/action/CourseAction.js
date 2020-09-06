@@ -60,6 +60,26 @@ export const loadUserCourses = () => {
     }
 }
 
+export const loadUserEnrolledCoursesSuccess = (data) => {
+    return {
+        type: actionTypes.LOAD_USER_COURSES_SUCCESS,
+        payload: data
+    }
+}
+
+export const loadUserEnrolledCourses = () => {
+    return (dispatch) => {
+        axios.get('http://localhost:3004/api/courses/user_courses',{withCredentials: true})
+            .then(res => {
+                console.log('loadUserEnrolledCourses action');
+                console.log(res.data);
+                dispatch(loadUserEnrolledCoursesSuccess(res.data));
+            }).catch(error => {
+
+            });
+    }
+}
+
 export const loadInstructorCourseSuccess = (data) => {
     return {
         type: actionTypes.LOAD_INSTRUCTOR_COURSES_SUCCESS,
@@ -119,6 +139,26 @@ export const updateCourseCurriculum = (id,course) => {
     }
 }
 
+export const updateCourseInfoSuccess = (data) => {
+    return {
+        type: actionTypes.UPDATE_COURSE_INFO_SUCCESS,
+        payload : data
+    }
+}
+
+export const updateCourseInfo = (id,course) => {
+    return (dispatch) => {
+        axios.put('http://localhost:3004/api/courses/update_course_info/'+id,course,{withCredentials: true})
+            .then(res => {
+                console.log('updateCourseInfo actions');
+                console.log(res.data);
+                dispatch(updateCourseInfoSuccess(res.data));
+            }).catch(error => {
+
+            });
+    }
+}
+
 export const loadCourseCurriculum = (id) => {
     return (dispatch) => {
         axios.get('http://localhost:3004/api/courses/curriculum/'+id)
@@ -155,6 +195,37 @@ export const loadCourseCurriculumSuccess = (data) => {
     return {
         type: actionTypes.LOAD_COURSE_CURRICULUM_SUCCESS,
         payload: data
+    }
+}
+
+
+export const submitCourseForApproval = (id,courseStatus) => {
+    return (dispatch) => {
+        
+        axios.put('http://localhost:3004/api/courses/submit_course_for_approval/'+id,courseStatus,{withCredentials: true})
+            .then(res => {
+                //console.log('after call api updsate course category');
+                //console.log(res.data);
+                //console.log(id);
+                dispatch(loadInstructorCourseSuccess(res.data));
+            }).catch(error => {
+
+        });
+    }
+}
+
+export const approveRejectCourse = (id,courseStatus) => {
+    return (dispatch) => {
+        
+        axios.put('http://localhost:3004/api/courses/approve_reject_course/'+id,courseStatus,{withCredentials: true})
+            .then(res => {
+                //console.log('after call api updsate course category');
+                //console.log(res.data);
+                //console.log(id);
+                dispatch(loadCourseSuccess(res.data));
+            }).catch(error => {
+
+        });
     }
 }
 

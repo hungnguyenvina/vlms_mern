@@ -14,7 +14,7 @@ const routerCourseCategory = require('./routes/courseCategoryRoute');
 const routerCourse = require('./routes/courseRoute');
 const routerGuest = require('./routes/guestRoute');
 const routerCart = require('./routes/cartRoute');
-
+const routerTransaction = require('./routes/transactionRoute');
 mongoose.Promise = global.Promise;
 console.log('mongo db uri');
 console.log(process.env.MONGODB_URI);
@@ -50,6 +50,10 @@ app.use(function(req, res, next) {
 //app.use(cors({credentials: true,}));
 
 app.use(cookieParser());
+
+app.use('/uploads',express.static(path.resolve(__dirname,'uploads')));
+
+
 app.use(express.static(path.resolve(__dirname,'../client','build')));
 //app.use(express.static('client/build'));
 var db = mongoose.connection;
@@ -64,6 +68,7 @@ app.use('/api/question_categories', routerQuestionCategory);
 app.use('/api/course_categories', routerCourseCategory);
 app.use('/api/courses', routerCourse);
 app.use('/api/carts', routerCart);
+app.use('/api/transactions', routerTransaction);
 app.use('/api/', routerGuest);
 
 //app.use('/api', router);
