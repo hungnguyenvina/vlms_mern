@@ -32,8 +32,8 @@ export const loadSingleCourse = (courseID) => {
     return (dispatch) => {
         axios.get('http://localhost:3004/api/courses/'+courseID)
             .then(res => {
-                //console.log('after call get single course API....');
-                //console.log(res.data[0]);
+                console.log('after call get single course API....');
+                console.log(res.data);
                 dispatch(loadSingleCourseSuccess(res.data[0]));
             }).catch(error => {
 

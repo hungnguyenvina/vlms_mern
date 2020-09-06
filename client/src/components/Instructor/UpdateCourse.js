@@ -7,11 +7,12 @@ import UIInput from '../UI/UIInput';
 import { Form, Button, Upload } from 'element-react';
 import InstructorLayout from './InstructorLayout';
 import CreateUpdateCourse from './CreateUpdateCourse.css';
+import CKEditor from "react-ckeditor-component";
 import {post} from 'axios';
 class UpdateCourse extends React.Component {
     constructor(props) {
         super(props);
-		
+		this.onChangeCKEditor = this.onChangeCKEditor.bind(this);
         this.state = {
 			image:'',
 			course_logo_url:'',
@@ -31,7 +32,112 @@ class UpdateCourse extends React.Component {
 					},
 					valid: true,
 					isDirty: false
-			   	},
+				   },
+				fee: {
+				elementType : 'input',
+				elementConfig : {
+					type : 'text',
+					placeholder: 'Enter course fee',
+					name: 'fee'
+				},
+				label: 'Course\'s fee',
+				value : '',
+				validation: {
+					required: true
+				},
+				valid: true,
+				isDirty: false
+				},
+				short_description: {
+					elementType : 'input',
+					elementConfig : {
+						type : 'ckeditor',
+						placeholder: 'Enter course short description',
+						name: 'short_description'
+					},
+					label: 'Short description',
+					value : '',
+					validation: {
+						required: false
+					},
+					valid: true,
+					isDirty: false
+				},
+				full_description: {
+					elementType : 'input',
+					elementConfig : {
+						type : 'ckeditor',
+						placeholder: 'Enter course full description',
+						name: 'full_description'
+					},
+					label: 'Full description',
+					value : '',
+					validation: {
+						required: false
+					},
+					valid: true,
+					isDirty: false
+				},
+				goal: {
+					elementType : 'input',
+					elementConfig : {
+						type : 'ckeditor',
+						placeholder: 'Enter course goal',
+						name: 'goal'
+					},
+					label: 'Goal',
+					value : '',
+					validation: {
+						required: false
+					},
+					valid: true,
+					isDirty: false
+				},
+				requirement: {
+					elementType : 'input',
+					elementConfig : {
+						type : 'ckeditor',
+						placeholder: 'Enter course requirement',
+						name: 'requirement'
+					},
+					label: 'Requirement',
+					value : '',
+					validation: {
+						required: false
+					},
+					valid: true,
+					isDirty: false
+				},
+				skill_level: {
+					elementType : 'input',
+					elementConfig : {
+						type : 'ckeditor',
+						placeholder: 'Enter course skill level',
+						name: 'skill_level'
+					},
+					label: 'Skill level',
+					value : '',
+					validation: {
+						required: false
+					},
+					valid: true,
+					isDirty: false
+				},
+				language: {
+					elementType : 'input',
+					elementConfig : {
+						type : 'ckeditor',
+						placeholder: 'Enter course language',
+						name: 'language'
+					},
+					label: 'Language',
+					value : '',
+					validation: {
+						required: false
+					},
+					valid: true,
+					isDirty: false
+				},
 				course_category_id : {
 					elementType : 'select',
 					elementConfig : {
@@ -77,7 +183,8 @@ class UpdateCourse extends React.Component {
 
 	componentDidMount() {
         //alert('did mount');
-        const courseID = this.props.match.params.id;
+		const courseID = this.props.match.params.id;
+		//alert('course ID'+courseID);
 	    this.props.loadSingleCourse(courseID);
 	}
 
@@ -103,10 +210,38 @@ class UpdateCourse extends React.Component {
 		let course_picture_url = this.state.courseForm.course_logo.value;
 		alert('course_logo = '+course_picture_url);
 
+		let short_description = this.state.courseForm.short_description.value;
+		alert('short_description = '+short_description);
+
+		let description = this.state.courseForm.full_description.value;
+		alert('full description = '+description);
+
+		let goal = this.state.courseForm.goal.value;
+		alert('goal = '+goal);
+
+		let requirement = this.state.courseForm.requirement.value;
+		alert('requirement = '+requirement);
+
+		let skill_level = this.state.courseForm.skill_level.value;
+		alert('skill_level = '+skill_level);
+
+		let language = this.state.courseForm.language.value;
+		alert('language = '+language);
+
+		let fee = this.state.courseForm.fee.value;
+		alert('fee = '+fee);
+
 		const courseDataForUpdate = {
 			title:course_title,
 			course_category_id,
-			course_picture_url
+			course_picture_url,
+			short_description,
+			description,
+			goal,
+			requirement,
+			skill_level,
+			language,
+			fee
 		};
 
 		const courseID = this.props.match.params.id;
@@ -184,6 +319,83 @@ class UpdateCourse extends React.Component {
 							course_logo_url: urlResponse
 						});
 				})};
+	
+	onChangeCKEditor(evt){
+		let inputIdentifier="";
+		console.log('onChangeCKEditor...................');
+		console.log(evt);
+		let nameOfCKEditor = evt.editor.name;
+		//alert('nameOfCKEditor='+nameOfCKEditor);
+
+		var valueOfCKEditor = evt.editor.getData();
+		//alert('valueOfCKEditor : '+valueOfCKEditor);
+		if(nameOfCKEditor==='editor1') {
+			//short description
+			inputIdentifier="short_description";
+		}
+		else if(nameOfCKEditor==='editor2') {
+			//full description
+			inputIdentifier="full_description";
+		}
+		else if(nameOfCKEditor==='editor3') {
+			//goal
+			inputIdentifier="goal";
+		}
+		else if(nameOfCKEditor==='editor4') {
+			//requirement
+			inputIdentifier="requirement";
+		}
+		else if(nameOfCKEditor==='editor5') {
+			//skill_level
+			inputIdentifier="skill_level";
+		}
+		else if(nameOfCKEditor==='editor6') {
+			//language
+			inputIdentifier="language";
+		}
+
+		const updatedCourseForm = {
+			...this.state.courseForm
+		}
+		updatedCourseForm[inputIdentifier].value = valueOfCKEditor;
+		updatedCourseForm[inputIdentifier].isDirty=true;
+		this.setState({courseForm: updatedCourseForm});
+
+		
+	}
+
+	componentWillReceiveProps(nextProps) {
+		console.log('componentWillReceiveProps');
+		console.log(nextProps.single_course_detail);
+		const course_detail_info = nextProps.single_course_detail;
+
+		if(course_detail_info.hasOwnProperty('title'))
+		{
+			const updatedCourseForm = {
+				...this.state.courseForm
+			}
+			updatedCourseForm['title'].value = course_detail_info.title;
+			alert(course_detail_info.course_category_id);
+			updatedCourseForm['short_description'].value = course_detail_info.short_description;
+			updatedCourseForm['full_description'].value = course_detail_info.description;
+			updatedCourseForm['goal'].value = course_detail_info.goal;
+			updatedCourseForm['requirement'].value = course_detail_info.requirement;
+			updatedCourseForm['skill_level'].value = course_detail_info.skill_level;
+			updatedCourseForm['language'].value = course_detail_info.language;
+			updatedCourseForm['fee'].value = course_detail_info.fee;
+			updatedCourseForm['course_category_id'].value = course_detail_info.course_category_id;
+			updatedCourseForm['course_category_id'].elementConfig.defaultOption = {
+				
+					value: course_detail_info.course_category_id, displayValue: 'Select category'
+				
+			}
+			
+			
+			updatedCourseForm['course_logo'].value = course_detail_info.course_picture_url;
+
+			this.setState({courseForm: updatedCourseForm});
+		}
+	}
 
     render() {
 		const style1 = {
@@ -216,11 +428,9 @@ class UpdateCourse extends React.Component {
 		let form = (
 			<Form onSubmit={this.onSubmitHandler}>
 				{formElementsArray.map(formElement => {
-					console.log('formElement');
-					console.log(formElement);
+
 					if(formElement.config.elementConfig.type==='file')
 					{
-						
 						return (
 							<UIInput key={formElement.id}
 								name="myFile"
@@ -238,6 +448,24 @@ class UpdateCourse extends React.Component {
 								validation={formElement.config.validation}
 								isDirty={formElement.config.isDirty}
 							/>
+						)
+					}
+					else if(formElement.config.elementConfig.type==='ckeditor')
+					{
+						return (
+							<UIInput key={formElement.id}
+								label={formElement.config.label}
+								elementType={formElement.config.elementType} 
+								elementConfig={formElement.config.elementConfig}
+								value={formElement.config.value} 
+								content={formElement.config.value}
+								onChangeCKEditor={this.onChangeCKEditor}
+								onFormSubmit={(event) => this.onFormSubmit(event)}
+								isValid={formElement.config.valid}
+								validation={formElement.config.validation}
+								isDirty={formElement.config.isDirty}
+							/>
+							
 						)
 					}
 					else{
@@ -294,8 +522,11 @@ class UpdateCourse extends React.Component {
 }
 
 const mapStateToProps = state => {
+	//console.log('mapStateToProps');
+	//console.log(state);
 	return {
-		course_categories : state.course_categories
+		course_categories : state.course_categories,
+		single_course_detail: state.courses.single_course
 	};
 }
 

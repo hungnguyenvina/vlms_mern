@@ -1,4 +1,5 @@
 import React from 'react';
+import CKEditor from "react-ckeditor-component";
 import {Input,Select,Form, Button, Upload} from 'element-react';
 
 const UIInput  = (props) => {
@@ -46,7 +47,20 @@ const UIInput  = (props) => {
                             <Button size="small" type="primary">Click to upload</Button>
                         </Upload>    
                     </Form.Item>;
-            } else {
+            } 
+            else if(props.elementConfig.type==='ckeditor') { 
+                inputElement =  
+                <Form.Item label={props.label} labelWidth="120">
+                    <CKEditor 
+                                activeClass="myCKEditor" 
+                                content={props.content} 
+                                events={{
+                                    "change": props.onChangeCKEditor
+                                  }}
+                    />
+                </Form.Item>;     
+            }
+            else {
                 inputElement =  
                     <Form.Item label={props.label} labelWidth="120">
                         <Input {...props.elementConfig} value={props.value} onChange={props.onChange} className="form-control" />
