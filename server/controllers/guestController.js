@@ -14,6 +14,7 @@ exports.createInstructor = function(req,res) {
 
 exports.createUser = function(req,res){
     var user = new User(req.body);
+    user.role = 2;
     user.save(function(err1,user1){
         if(err1) return res.status(400).send(err);
         user1.generateToken((err,user)=>{
@@ -72,7 +73,8 @@ exports.login = function(req,res) {
                     var token = user.generateToken((err,user)=>{
                         if(err) return res.status(400).send(err);
                         // return the information including token as JSON
-                        res.cookie('c_auth',user.token,{ maxAge: 9000000, httpOnly: true }).status(200).json({
+                        //expires in 14*24*3600000 (14 days x 24hours/a day * 3600 miliseconds/a hour)
+                        res.cookie('c_auth',user.token,{ maxAge: 14*24*3600000, httpOnly: true }).status(200).json({
                             success: true,
                             user: user
                         });

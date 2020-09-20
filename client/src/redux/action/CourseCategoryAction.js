@@ -9,12 +9,18 @@ export const loadCourseCategorySuccess = (data) => {
     }
 }
 
+
+
 export const loadCourseCategory = () => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/course_categories')
+        axios.get('http://localhost:3004/api/course_categories',{withCredentials: true})
             .then(res => {
                 //console.log('in action:',res.data);
-                dispatch(loadCourseCategorySuccess(res.data));
+
+                    dispatch(loadCourseCategorySuccess(res.data));
+                
+             
+                
             }).catch(error => {
 
             });
@@ -30,7 +36,7 @@ export const deleteCourseCategorySuccess = (courseCategoryID) => {
 
 export const deleteCourseCategory = (courseCategoryID) => {
     return (dispatch) => {
-        axios.delete('http://localhost:3004/api/course_categories/'+courseCategoryID)
+        axios.delete('http://localhost:3004/api/course_categories/'+courseCategoryID,{withCredentials: true})
             .then(res => {
                 dispatch(deleteCourseCategorySuccess(courseCategoryID));
             }).catch(error => {
@@ -48,7 +54,7 @@ export const createCourseCategorySuccess = (data) => {
 
 export const createCourseCategory = (courseCategory) => {
     return (dispatch) => {
-        axios.post('http://localhost:3004/api/course_categories/',courseCategory)
+        axios.post('http://localhost:3004/api/course_categories/',courseCategory,{withCredentials: true})
             .then(res => {
                 //console.log('result from api');
                 //console.log(res.data);
@@ -69,7 +75,7 @@ export const updateCourseCategorySuccess = (id,data) => {
 
 export const updateCourseCategory = (id,courseCategory) => {
     return (dispatch) => {
-        axios.put('http://localhost:3004/api/course_categories/'+id,courseCategory)
+        axios.put('http://localhost:3004/api/course_categories/'+id,courseCategory,{withCredentials: true})
             .then(res => {
                 //console.log('after call api updsate course category');
                 //console.log(res.data);

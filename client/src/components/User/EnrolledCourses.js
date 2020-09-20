@@ -107,6 +107,10 @@ class EnrolledCourses extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+
+    if(!nextProps.load_user_courses_success) {
+      this.props.history.push('/login');
+    }
     let courses = [];
     if (nextProps.courses && nextProps.courses.length > 0) {
       this.setState({ loading: true });
@@ -192,7 +196,8 @@ const mapStateToProps = state => {
   console.log('mapStateToProps');
   console.log(state.courses);
   return {
-    courses: state.courses.user_courses
+    courses: state.courses.user_courses,
+    load_user_courses_success: state.courses.load_user_courses_success
   };
 };
 

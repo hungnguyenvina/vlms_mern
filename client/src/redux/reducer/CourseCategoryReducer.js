@@ -2,7 +2,8 @@ import * as actionType from '../action/actionTypes';
 
 const initialState = {
     question_categories: [],
-    course_categories: []   
+    course_categories: [],
+    success: true   
 };
 
 export const CourseCategoryReducer = (state = initialState.course_categories,action) => {

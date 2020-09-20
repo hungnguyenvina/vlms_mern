@@ -10,7 +10,7 @@ export const loadCourseSuccess = (data) => {
 
 export const loadCourses = () => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/courses/all_courses')
+        axios.get('http://localhost:3004/api/courses/all_courses',{withCredentials: true})
             .then(res => {
                 //console.log('after call API....');
                 //console.log(res.data);
@@ -30,7 +30,7 @@ export const loadSingleCourseSuccess = (data) => {
 
 export const loadSingleCourse = (courseID) => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/courses/'+courseID)
+        axios.get('http://localhost:3004/api/courses/'+courseID,{withCredentials: true})
             .then(res => {
                 console.log('after call get single course API....');
                 console.log(res.data);
@@ -48,14 +48,21 @@ export const loadUserCourseSuccess = (data) => {
     }
 }
 
+
+
 export const loadUserCourses = () => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/user/courses')
+        axios.get('http://localhost:3004/api/user/courses',{withCredentials: true})
             .then(res => {
                 //console.log(res.data);
-                dispatch(loadUserCourseSuccess(res.data));
+                if(res.data.success) {
+                    dispatch(loadUserCourseSuccess(res.data));
+                }
+                else {
+                    //dispatch(loadUserCourseFailure(res.data));
+                }
             }).catch(error => {
-
+                //dispatch(loadUserCourseFailure({success:false, message: 'do not have permission'}));
             });
     }
 }
@@ -67,6 +74,14 @@ export const loadUserEnrolledCoursesSuccess = (data) => {
     }
 }
 
+export const loadUserEnrolledCoursesFailure = (data) => {
+    return {
+        type: actionTypes.LOAD_USER_COURSES_FAILURE,
+        payload: data
+    }
+}
+
+
 export const loadUserEnrolledCourses = () => {
     return (dispatch) => {
         axios.get('http://localhost:3004/api/courses/user_courses',{withCredentials: true})
@@ -75,7 +90,8 @@ export const loadUserEnrolledCourses = () => {
                 console.log(res.data);
                 dispatch(loadUserEnrolledCoursesSuccess(res.data));
             }).catch(error => {
-
+                console.log('loadUserEnrolledCourses error');
+                dispatch(loadUserEnrolledCoursesFailure({success:false,message:'do not have permission'}));
             });
     }
 }
@@ -128,7 +144,7 @@ export const updateCourseCurriculumSuccess = (data) => {
 
 export const updateCourseCurriculum = (id,course) => {
     return (dispatch) => {
-        axios.put('http://localhost:3004/api/courses/update_curriculum/'+id,course)
+        axios.put('http://localhost:3004/api/courses/update_curriculum/'+id,course,{withCredentials: true})
             .then(res => {
                 console.log('updateCourseCurriculum actions');
                 console.log(res.data);
@@ -161,7 +177,7 @@ export const updateCourseInfo = (id,course) => {
 
 export const loadCourseCurriculum = (id) => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/courses/curriculum/'+id)
+        axios.get('http://localhost:3004/api/courses/curriculum/'+id,{withCredentials: true})
             .then(res => {
                 console.log('loadCourseCurriculum action...');
                 console.log(res.data);
@@ -181,7 +197,7 @@ export const loadLessionByLessionIDSuccess = (data) => {
 
 export const loadLessionByLessionID = (id) => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/courses/lession/'+id)
+        axios.get('http://localhost:3004/api/courses/lession/'+id,{withCredentials: true})
             .then(res => {
                 //console.log(res.data);
                 dispatch(loadLessionByLessionIDSuccess(res.data));
@@ -238,7 +254,7 @@ export const deleteCourseSuccess = (courseID) => {
 
 export const deleteCourse = (courseID) => {
     return (dispatch) => {
-        axios.delete('http://localhost:3004/api/courses/'+courseID)
+        axios.delete('http://localhost:3004/api/courses/'+courseID,{withCredentials: true})
             .then(res => {
                 dispatch(deleteCourseSuccess(courseID));
             }).catch(error => {

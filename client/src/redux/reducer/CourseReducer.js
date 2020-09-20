@@ -7,7 +7,8 @@ const initialState = {
     instructor_courses:[],
     curriculum:[],
     lession:{},
-    message:""
+    message:"",
+    load_user_courses_success:true
 };
 
 export const CourseReducer = (state = initialState,action) => {
@@ -50,6 +51,14 @@ export const CourseReducer = (state = initialState,action) => {
             return {
                 ...state,
                 user_courses: action.payload
+            }
+        case actionType.LOAD_USER_COURSES_FAILURE:
+            console.log('payload LOAD_USER_COURSES_FAILURE:');
+            console.log(action.payload);
+            return {
+                ...state,
+                user_courses: [],
+                load_user_courses_success:false
             }
         case actionType.LOAD_INSTRUCTOR_COURSES_SUCCESS :
             //console.log('payload COURSES:'+ action.payload);

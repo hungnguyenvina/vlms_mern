@@ -9,6 +9,31 @@ exports.getAllUsers = function(req,res){
     });
 }
 
+exports.becomeAnInstructor = function(req,res){
+    User.findOneAndUpdate(
+        { _id : req.params.id},
+        { role: 1}, 
+        {new : true}
+    )
+    .exec(function(err,user){
+        if(err) return res.status(400).json({success: false, message:'Cannot become an instructor'+err});
+        return res.status(200).json({success: true, message:'You are now an instructor'});
+    });
+}
+
+exports.updateUserInfo = function(req,res){
+    User.findOneAndUpdate(
+        { _id : req.params.id},
+        req.body, 
+        {new : true}
+    )
+    .exec(function(err,user){
+        if(err) return res.status(400).json({success: false, message:'Cannot update user info'+err});
+        req.user = user;
+        return res.status(200).json({success: true, user});
+    });
+}
+
 exports.getUserByUserID = async function(req,res){
     if(!mongoose.Types.ObjectId.isValid( req.params.id)){
         res.json({error:'Invalid user id'});
@@ -36,7 +61,8 @@ exports.getAuthenticatedUserInfor = (req,res) => {
         name: req.user.name,
         role: req.user.role,
         cart: req.user.cart,
-        history: req.user.history
+        history: req.user.history,
+        avatar_url: req.user.avatar_url
 
     })
 }

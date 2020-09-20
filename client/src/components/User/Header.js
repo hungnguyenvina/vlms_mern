@@ -11,7 +11,8 @@ class Header extends Component {
         //console.log(props.user);
         this.state = {
           isAdmin: props.user.isAdmin,
-          name: props.user.name
+          name: props.user.name,
+          avatar: props.user.avatar_url
         }
     }    
     
@@ -44,7 +45,7 @@ class Header extends Component {
                 <Link style={{textDecoration:'none'}} to='/'>
                     <Menu.Item index="1">Home</Menu.Item>
                 </Link>
-                <Menu.Item style={{float:'right'}} index="13">Welcome , {this.state.name}</Menu.Item>
+                <Menu.Item style={{float:'right'}} index="13"><img style={{width:'32px', height:'32px', borderRadius:'50%'}} src={this.state.avatar} /> Welcome , {this.state.name}</Menu.Item>
                 <Menu.Item  style={{float:'right'}} index="13"><span onClick={()=>this.logOut()}>Logout</span></Menu.Item>
             </Menu>
         </div>

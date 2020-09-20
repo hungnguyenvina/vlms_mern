@@ -1,17 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/User');
-const checkAuthenticate = require('../middleware/middleware');
+const middleware = require('../middleware/middleware');
 const userController = require('../controllers/userController');
 
-router.get('/', userController.getAllUsers);
+router.get('/', middleware.checkAdminAuthenticate(),userController.getAllUsers);
 
-router.get('/authenticate/', checkAuthenticate(), userController.getAuthenticatedUserInfor);
+router.get('/authenticate/', middleware.checkAuthenticate(), userController.getAuthenticatedUserInfor);
 
 
-router.get('/:id', userController.getUserByUserID);
+router.get('/:id', middleware.checkUserAuthenticate(),userController.getUserByUserID);
 
-router.get('/:id/cart/', function(req,res){
+router.get('/:id/cart/', middleware.checkUserAuthenticate(), function(req,res){
     User.find({_id: req.params.id})
         .populate({path : 'cart.$.id',  select: ''})
         .exec(function (err, results) {
@@ -33,17 +33,7 @@ router.get('/:id/cart/', function(req,res){
 
 
 
-router.put('/become_instructor/:id',function(req,res){
-    User.findOneAndUpdate(
-        { _id : req.params.id},
-        { role: 1}, 
-        {new : true}
-    )
-    .exec(function(err,user){
-        if(err) return res.status(400).json({success: false, message:'Cannot become an instructor'+err});
-        return res.status(200).json({success: true, message:'You are now an instructor'});
-    });
-})
-
+router.put('/become_instructor/:id',middleware.checkUserAuthenticate(), userController.becomeAnInstructor)
+router.put('/:id',middleware.checkUserAuthenticate(), userController.updateUserInfo)
 
 module.exports = router;

@@ -32,8 +32,8 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    //console.log('component will receive props');
-    //console.log(nextProps);
+    console.log('component will receive props');
+    console.log(nextProps);
     //console.log(nextProps.loginSuccess);
     if(nextProps.loginSuccess) {
       const role = nextProps.user.role;

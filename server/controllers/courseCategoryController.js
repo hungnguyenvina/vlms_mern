@@ -77,7 +77,8 @@ exports.updateCourseCategory = function(req,res){
             'name': courseCategory.name,
             'description': courseCategory.description,
             'course_category_parent_id': courseCategory.course_category_parent_id==null?'':courseCategory.course_category_parent_id._id,
-            'course_category_parent_name':  courseCategory.course_category_parent_id==null?'':courseCategory.course_category_parent_id.name
+            'course_category_parent_name':  courseCategory.course_category_parent_id==null?'':courseCategory.course_category_parent_id.name,
+            'status': courseCategory.status
         }
         res.json({courseCategory: tranformCourseCategory,status: 'success', message:'update course category successfully with id:!'+req.params.id});
     });
@@ -86,9 +87,15 @@ exports.updateCourseCategory = function(req,res){
 exports.deleteCourseCategory = function(req,res){
     CourseCategory.findOneAndRemove({_id : req.params.id},function(err,courseCategory){
        if(err) {
-            res.json({status: 'failure', message:'cannot delete course category!'+req.params.id});
+            res.json({status: 'failure', message:'cannot delete course category!'+req.params.id + err});
         } else {
-            res.json({status: 'success', message:'delete course category successfully!'+req.params.id});
+            if(courseCategory===null) {
+                res.json({status: 'success', message:'Could not found course category :'+req.params.id, data: courseCategory});
+            }
+            else{
+                res.json({status: 'success', message:'delete course category successfully!'+req.params.id, data: courseCategory});
+            }
+            
         }
     });
 }

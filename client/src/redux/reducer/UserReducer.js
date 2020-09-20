@@ -72,6 +72,16 @@ export const UserReducer = (state = initialState,action) => {
             console.log('after state'+ newState1);
             //return newState1;
             return action.payload.data;
+        case actionType.LOAD_SINGLE_USER_SUCCESS :
+            console.log('LOAD_SINGLE_USER_SUCCESS ');
+            console.log(action.payload);
+            const newStateSingleUser = {
+                ...state,
+                user: action.payload.user
+            };
+            console.log('after LOAD_SINGLE_USER_SUCCESS'+ newStateSingleUser);
+            //return newState1;
+            return newStateSingleUser;
         case actionType.DELETE_USER_SUCCESS :
             const userID = parseInt(action.payload);
             console.log('userID'+ userID);
@@ -84,16 +94,15 @@ export const UserReducer = (state = initialState,action) => {
                 users: action.payload
             }
         case actionType.UPDATE_USER_PROFILE_SUCCESS :
-            const userIDForUpdate = parseInt(action.id);
-            const newState = state.users.filter(item => item.id !== userIDForUpdate);
-            console.log(newState);
-            return {
+            console.log('payload LOAD_AUTHENTICATED_USER_SUCCESS');
+            console.log(action.payload);
+            let newStateUpdateUserInfo = {
                 ...state,
-                users: [
-                    newState,
-                    action.payload
-                ]
+                user: action.payload.user
             }
+            console.log('new state');
+            console.log(newStateUpdateUserInfo);
+            return newStateUpdateUserInfo;
         default : 
             return state;
     }

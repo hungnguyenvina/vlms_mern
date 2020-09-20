@@ -8,6 +8,13 @@ export const loadUserSuccess = (data) => {
     }
 }
 
+export const loadSingleUserSuccess = (data) => {
+    return {
+        type: actionTypes.LOAD_SINGLE_USER_SUCCESS,
+        payload: data
+    }
+}
+
 export const loadUser = () => {
     return (dispatch) => {
         axios.get('http://localhost:3004/api/users')
@@ -78,6 +85,19 @@ export const becomeAnInstructor = (id) => {
     }
 }
 
+export const getSingleUserInfo = (id) => {
+    return (dispatch) => {
+        axios.get('http://localhost:3004/api/users/'+id,{withCredentials: true})
+            .then(res => {
+                //console.log('after calling api become instructor...');
+                //console.log(res.data);
+                dispatch(loadSingleUserSuccess(res.data));
+            }).catch(error => {
+
+            });
+    }
+}
+
 export const updateUserProfileSuccess = (id,data) => {
     return {
         type: actionTypes.UPDATE_USER_PROFILE_SUCCESS,
@@ -88,10 +108,11 @@ export const updateUserProfileSuccess = (id,data) => {
 
 export const updateUserProfile = (id,profile) => {
     return (dispatch) => {
-        axios.put('http://localhost:3004/api/update_user_profile/'+id,profile)
+        axios.put('http://localhost:3004/api/users/'+id,profile,{withCredentials: true})
             .then(res => {
-                //console.log(res.data);
-                dispatch(updateUserProfileSuccess(id,res.data.data));
+                console.log('updateUserProfile action.......');
+                console.log(res.data);
+                dispatch(updateUserProfileSuccess(id,res.data));
             }).catch(error => {
 
             });
@@ -106,6 +127,7 @@ export const loginSuccess = (data) => {
 }
 
 export const login = (user) => {
+    //{withCredentials: true} will allow to save sesssion cookies c_auth in browser
     return (dispatch) => {
         const request = axios.post('http://localhost:3004/api/login/',user,{withCredentials: true})
             .then(res => {

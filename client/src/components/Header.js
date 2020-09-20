@@ -8,7 +8,8 @@ class Header extends Component {
         super(props);
         this.state = {
           isAdmin: false,
-          name: ''
+          name: '',
+          avatar: props.user.avatar_url
         }
     }
 
@@ -75,7 +76,7 @@ class Header extends Component {
         if(this.state.name!=="") {
             menu=   (
                 <React.Fragment>
-                    <Menu.Item  style={{float:'right'}} index="13"><span onClick={()=>this.redirectToPrivatePage()}>Welcome 1, {this.state.name}</span></Menu.Item>
+                    <Menu.Item  style={{float:'right'}} index="13"><span onClick={()=>this.redirectToPrivatePage()}><img style={{width:'32px', height:'32px', borderRadius:'50%'}} src={this.state.avatar} /> Welcome, {this.state.name}</span></Menu.Item>
                     <Menu.Item  style={{float:'right'}} index="13"><span onClick={()=>this.logOut()}>Logout</span></Menu.Item>
                 </React.Fragment>
             )

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import CourseItem from './CourseItem';
 import { loadCourses } from '../redux/action/CourseAction';
-import {Loading} from 'element-react';
+import {Loading, Pagination} from 'element-react';
 import {hoc} from '../components/hoc/hoc';
 import HomeLayout from './HomeLayout';
 class CourseList extends Component {
@@ -48,6 +48,12 @@ class CourseList extends Component {
           }
     }
 
+    onCurrentChange = (currentPage) => {
+      this.setState({
+        currentPage: currentPage
+      });
+    }
+
     getPaginationData(currentPage,data) {
         const startIndex = (currentPage-1) * this.state.noOfItemsPerPage;
         const endIndex = startIndex + this.state.noOfItemsPerPage;
@@ -68,7 +74,11 @@ class CourseList extends Component {
                 {courses.map(item=>{
                     return <CourseItem {...this.props} key={item.id} item={item} />
                 })}
-                
+                <div className="first" style={{textAlign: 'center', marginBottom:'30px'}}>
+                  <div className="block">
+                    <Pagination pageSize={this.state.noOfItemsPerPage} onCurrentChange={this.onCurrentChange} layout="prev, pager, next" total={this.state.courses.length}/>
+                  </div>
+                </div>
             </React.Fragment>
           </HomeLayout>
         );

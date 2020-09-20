@@ -363,7 +363,8 @@ class CourseCategories extends React.Component {
       this.setState({ 
         dialogVisible: true,
         isUpdated: true,
-        selectedCourseCategoryID: item.id 
+        selectedCourseCategoryID: item.id ,
+        selectedStatus: item.status
       });
       
       const state = {...me.state.courseCategory};
@@ -394,13 +395,13 @@ class CourseCategories extends React.Component {
         state['course_category_parent_id'] =  item.id ;
         state['course_category_parent_name'] = item.name;
       }
-
+      
       newState.courseCategoryParent.elementConfig.defaultOption.value = selectedItem;
       newState.name.value = item.name;
       //newState.name.valid = this.checkValidity(newState.name.value, newState.name.validation);
   
       newState.description.value=item.description;
-      newState.status.value = item.status;//this.state.courseCategory.status;
+      newState.status.elementConfig.defaultOption.value    = ""+item.status;//this.state.courseCategory.status;
       //newState.courseCategoryParent.value= this.state.courseCategory.category_course_parent_id;
       //this.setState({courseCategoryForm:newState});
       //const newState = this.state.courseCategoryForm

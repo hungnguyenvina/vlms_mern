@@ -11,7 +11,7 @@ export const loadQuestionCategorySuccess = (data) => {
 
 export const loadQuestionCategory = () => {
     return (dispatch) => {
-        axios.get('http://localhost:3004/api/question_categories')
+        axios.get('http://localhost:3004/api/question_categories',{withCredentials: true})
             .then(res => {
                 //console.log('in action:',res.data);
                 dispatch(loadQuestionCategorySuccess(res.data));
@@ -30,7 +30,7 @@ export const deleteQuestionCategorySuccess = (questionCategoryID) => {
 
 export const deleteQuestionCategory = (questionCategoryID) => {
     return (dispatch) => {
-        axios.delete('http://localhost:3004/api/question_categories/'+questionCategoryID)
+        axios.delete('http://localhost:3004/api/question_categories/'+questionCategoryID,{withCredentials: true})
             .then(res => {
                 dispatch(deleteQuestionCategorySuccess(questionCategoryID));
             }).catch(error => {
@@ -48,7 +48,7 @@ export const createQuestionCategorySuccess = (data) => {
 
 export const createQuestionCategory = (questionCategory) => {
     return (dispatch) => {
-        axios.post('http://localhost:3004/api/question_categories/',questionCategory)
+        axios.post('http://localhost:3004/api/question_categories/',questionCategory,{withCredentials: true})
             .then(res => {
                 //console.log('result from api');
                 //console.log(res.data);
@@ -69,7 +69,7 @@ export const updateQuestionCategorySuccess = (id,data) => {
 
 export const updateQuestionCategory = (id,questionCategory) => {
     return (dispatch) => {
-        axios.put('http://localhost:3004/api/question_categories/'+id,questionCategory)
+        axios.put('http://localhost:3004/api/question_categories/'+id,questionCategory,{withCredentials: true})
             .then(res => {
                 //console.log('after call api updsate question category');
                 //console.log(res.data);

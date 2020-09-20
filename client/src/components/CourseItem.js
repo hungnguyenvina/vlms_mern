@@ -31,7 +31,7 @@ class CourseItem extends Component {
           
           <Layout.Col span={4} offset={2}>
             <Card bodyStyle={{ padding: '0px' }}>
-              <img
+              <img style={{width:'240px', height:'135px'}}
                 src={this.props.item.picture_url}
                 className="image"
               />
@@ -39,8 +39,8 @@ class CourseItem extends Component {
             </Card>
           </Layout.Col>
           <Layout.Col span={10}>
-            <Card bodyStyle={{ padding: 0, textAlign: 'left',minHeight:'155px' }}>
-              <div style={{padding: '5px 2px 2px 14px', fontWeight: '600', fontSize:'1.2em'}}>
+            <Card bodyStyle={{ padding: 0, textAlign: 'left',minHeight:'138px' }}>
+              <div style={{padding: '5px 2px 2px 14px', fontWeight: '600', fontSize:'1em'}}>
               <Link style={{textDecoration:'none'}} to={`/course/${this.props.item.id}`}>
                 {this.props.item.title}
               </Link>
@@ -52,7 +52,7 @@ class CourseItem extends Component {
             </Card>
           </Layout.Col>
           <Layout.Col span={4}>
-            <Card bodyStyle={{ padding: 0 ,minHeight:'155px' }} >
+            <Card bodyStyle={{ padding: 0 ,minHeight:'138px' }} >
               <div style={{ padding: 14 }}>
                 <div style={{fontWeight: '700', fontSize:'1.5em',marginBottom: '20px'}}>{course_fee}</div>
                 <div>
