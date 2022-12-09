@@ -19,7 +19,7 @@
   "dependencies": {
     "bcrypt": "^3.0.5",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.20.1",
     "cloudinary": "^1.14.0",
     "concurrently": "^4.1.0",
     "cookie-parser": "^1.4.4",
@@ -27,7 +27,7 @@
     "dotenv": "^7.0.0",
     "element-react": "^1.4.34",
     "element-theme-default": "^1.4.13",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "moment": "^2.24.0",
