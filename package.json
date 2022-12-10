@@ -27,7 +27,7 @@
     "dotenv": "^7.0.0",
     "element-react": "^1.4.34",
     "element-theme-default": "^1.4.13",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "moment": "^2.24.0",
